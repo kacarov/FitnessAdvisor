@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace App.Models.User
+namespace App.Models.Enums
 {
-    class BioData
+   public enum GenderType
     {
+        Male,
+        Female
     }
 }
