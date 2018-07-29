@@ -4,7 +4,8 @@ using System.Text;
 
 namespace App.Models.Contracts
 {
-    class IGeneralPurpose
+    public interface IGeneralPurpose // implement abstract GP class? 
     {
+        // target kg, target body fat, enddate? , daily calories goal?
     }
 }

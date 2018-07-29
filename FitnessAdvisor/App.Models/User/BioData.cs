@@ -4,7 +4,8 @@ using System.Text;
 
 namespace App.Models.User
 {
-    class BioData
+    public class BioData
     {
+        // weight height age gender waist biceps etc
     }
 }
