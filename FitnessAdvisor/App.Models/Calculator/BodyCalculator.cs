@@ -9,7 +9,7 @@ namespace App.Models.Calculators
 {
     public class BodyCalculator : ICalculatable
     {
-        // Needs validation, BodyCalculator with GenderType.Female not working correctly(it will be fixed soon)!
+        // Needs validation!
         public BodyCalculator() { }
         public double CalculateBodyFat(User user)
         {

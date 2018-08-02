@@ -18,7 +18,7 @@ namespace App.Models.UserInfo
         private double bodyFatPercentage;
         
         
-        public BioData(int age, GenderType gender, double weight, double height, double neckSize, double waistSize, double hipSize)
+        public BioData(int age, GenderType gender, double weight, double height, double neckSize, double waistSize, double hipsSize)
         {
             this.Age = age;
             this.Gender = gender;
