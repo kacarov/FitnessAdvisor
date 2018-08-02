@@ -5,7 +5,7 @@ using System.Text;
 
 namespace App.Models.UserInfo
 {
-   public class User
+    public class User
     {
         private string username;
         /* /// <summary>
@@ -14,7 +14,8 @@ namespace App.Models.UserInfo
          /// */
         private int age;
         private GenderType gender;
-       private BioData measurements;
+        private BioData measurements;
+
         public User(string username, int age, GenderType gender, BioData measurements)
         {
             Username = username;
@@ -31,13 +32,14 @@ namespace App.Models.UserInfo
             }
             set
             {
-                if(value == null)
+                if (value == null)
                 {
                     throw new ArgumentNullException("Argument cannot be null");
                 }
                 this.username = value;
             }
-         }
+        }
+
         public int Age
         {
             get
@@ -46,13 +48,14 @@ namespace App.Models.UserInfo
             }
             set
             {
-                if(value < 16 || value > 120)
+                if (value < 16 || value > 120)
                 {
                     throw new ArgumentException("Age must be between 16 and 120");
                 }
                 this.age = value;
             }
         }
+
         public GenderType Gender
         {
             get
@@ -64,6 +67,7 @@ namespace App.Models.UserInfo
                 this.gender = value;
             }
         }
+
         public BioData Measurements
         {
             get
