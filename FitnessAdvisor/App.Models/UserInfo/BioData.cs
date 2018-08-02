@@ -1,4 +1,5 @@
-﻿using System;
+﻿using App.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,20 +7,54 @@ namespace App.Models.UserInfo
 {
     public class BioData
     {
+        // NEED VALIDATIONS, ENCAPSULATION, ACCESS MODIFIERS !!!!
+        private int age;
+        private GenderType gender;
         private double weight;
         private double height;
         private double neckSize;
         private double waistSize;
         private double hipsSize;
         private double bodyFatPercentage;
-
-        public BioData(double weight, double height, double neckSize, double waistSize, double hipSize)
+        
+        
+        public BioData(int age, GenderType gender, double weight, double height, double neckSize, double waistSize, double hipSize)
         {
-            Weight = weight;
-            Height = height;
-            NeckSize = neckSize;
-            WaistSize = waistSize;
-            HipsSize = hipsSize;
+            this.Age = age;
+            this.Gender = gender;
+            this.Weight = weight;
+            this.Height = height;
+            this.NeckSize = neckSize;
+            this.WaistSize = waistSize;
+            this.HipsSize = hipsSize;
+        }
+
+        public int Age
+        {
+            get
+            {
+                return this.age;
+            }
+            set
+            {
+                if (value < 16 || value > 120)
+                {
+                    throw new ArgumentException("Age must be between 16 and 120");
+                }
+                this.age = value;
+            }
+        }
+
+        public GenderType Gender
+        {
+            get
+            {
+                return this.gender;
+            }
+            set
+            {
+                this.gender = value;
+            }
         }
 
         public double Weight
