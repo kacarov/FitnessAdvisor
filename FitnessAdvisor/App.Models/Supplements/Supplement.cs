@@ -1,7 +1,7 @@
 ﻿using App.Models.Enums;
 using System;
 using System.Text;
-
+//LOOK FOR VALIDATIONS
 namespace App.Models.Supplements
 {
     public class Supplement

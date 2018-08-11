@@ -1,8 +1,5 @@
 ﻿using App.Models.Contracts;
-using App.Models.Enums;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace App.Models.UserInfo
 {
@@ -30,11 +27,7 @@ namespace App.Models.UserInfo
             }
             set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("Argument cannot be null");
-                }
-                this.username = value;
+                this.username = value ?? throw new ArgumentNullException("Argument cannot be null");
             }
         }
         public BioData BioData
@@ -45,7 +38,7 @@ namespace App.Models.UserInfo
             }
             set
             {
-                this.bioData = value;
+                this.bioData = value ?? throw new ArgumentNullException("Bio data cannot be null");
             }
         }
         public IBodyTransformationGoal Goal
@@ -56,11 +49,7 @@ namespace App.Models.UserInfo
             }
             set
             {
-                if(value == null)
-                {
-                    throw new ArgumentException("Goal cannot be null.");
-                }
-                goal = value;
+                goal = value ?? throw new ArgumentException("Goal cannot be null.");
             }
         }
     }

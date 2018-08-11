@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text;
-
+//LOOK FOR VALIDATIONS
 namespace App.Models.Training
 {
     public class TrainingType

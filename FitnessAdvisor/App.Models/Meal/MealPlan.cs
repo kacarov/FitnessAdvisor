@@ -1,7 +1,7 @@
 ﻿using App.Models.Contracts;
 using System;
 using System.Text;
-
+//LOOK FOR VALIDATIONS
 namespace App.Models.Meal
 {
    public abstract class MealPlan : IMealPlan

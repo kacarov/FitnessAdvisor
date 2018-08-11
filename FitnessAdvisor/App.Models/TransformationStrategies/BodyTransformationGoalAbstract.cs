@@ -4,7 +4,7 @@ using App.Models.Training;
 using System;
 using System.Collections.Generic;
 using System.Text;
-
+//LOOK FOR VALIDATIONS
 namespace App.Models.TransformationStrategies
 {
     public abstract class BodyTransformationGoalAbstract : IBodyTransformationGoal
