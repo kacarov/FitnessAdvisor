@@ -7,7 +7,7 @@ namespace App.Core.Views
 {
     public class RegisterView : View
     {
-        private Button registerButton;
+        private Button confirmRegisterButton;
         private TextField usernameTextField;
         private TextField passwordTextField;
         private TextField firstNameTextField;
@@ -19,7 +19,7 @@ namespace App.Core.Views
             this.InitializeViewElements();
         }
 
-        public Button RegisterButton => this.registerButton;
+        public Button RegisterButton => this.confirmRegisterButton;
 
         public TextField UsernameField => this.usernameTextField;
 
@@ -34,7 +34,7 @@ namespace App.Core.Views
 
         private void InitializeViewElements()
         {
-            this.registerButton = new Button(12, 20, "_Register", true);
+            this.confirmRegisterButton = new Button(12, 20, "_Register", true);
             this.usernameTextField = new TextField(14, 10, 40, "");
             this.passwordTextField = new TextField(14, 12, 40, "")
             {
@@ -57,7 +57,7 @@ namespace App.Core.Views
                   this.lastNameTextField,
                    new Label(3, 18, "Email: "),
                   this.emailTextField,
-                  this.registerButton);
+                  this.confirmRegisterButton);
         }
     }
 }

@@ -16,159 +16,204 @@ namespace App.Core
     {
         public static void Main(string[] args)
         {
-            //BioData bioData = new BioData(23, GenderType.Female, 93, 189, 42, 89, 95);
-            //User user = new User("Martin", bioData);
-
-            //BodyCalculator bC = new BodyCalculator();
-
-            //Console.WriteLine(bC.CalculateBodyFat(user));
-            //Console.WriteLine(bC.CalculateCalories(user));
-
             var db = new DbContext();
             var userService = new UserService(db);
-            UserEntitie loggedUser = null;
+
+            UserEntitie loggedInUser = null;
+
+            //Views
+            LoginView loginScreen = new LoginView();
+            RegisterView registerScreen = new RegisterView();
+            StartScreen startScreen = new StartScreen();
+            BioDataView bioScreen = new BioDataView();
 
             Application.Init();
 
-            var top = Application.Top;
-            var window = new Window("FitApp") { X = 0, Y = 1, Width = Dim.Fill(), Height = Dim.Fill() };
+            Toplevel top = Application.Top;
+            Window window = new Window("FitApp") { X = 0, Y = 1, Width = Dim.Fill(), Height = Dim.Fill() };
 
             top.Add(window);
+            top.Add(startScreen);
 
-            var mainView = new View();
-            window.Add(mainView);
+            startScreen.LoginOptionButton.Clicked += () =>
+            {
+                loginScreen.LoginButton.Clicked += () =>
+                {
+                    // Try to get existing user
+                    loggedInUser = userService.Login(loginScreen.UsernameField.Text.ToString(), loginScreen.PasswordField.Text.ToString());
 
-            // Add start screen with options Login or Register 
-            //var startScreenView = 
+                    if (loggedInUser != null)
+                    {
+                        window.Remove(loginScreen);
+
+                        bioScreen.Add(new TextField(10, 5, 25, "Welcome " + loggedInUser.Username));
+                        window.Add(bioScreen);
+
+                        bioScreen.ConfirmButton.Clicked += () =>
+                        {
+                            BioDataEntitie newBioData = new BioDataEntitie
+                            {
+                                Weight = double.Parse(bioScreen.WeightTextField.Text.ToString()),
+                                Height = double.Parse(bioScreen.HeightTextField.Text.ToString()),
+                                NeckSize = double.Parse(bioScreen.NeckSizeeTextField.Text.ToString()),
+                                WaistSize = double.Parse(bioScreen.WaistSizeTextField.Text.ToString()),
+                                HipsSize = double.Parse(bioScreen.HipsSizeTextField.Text.ToString()),
+                            };
+
+                            loggedInUser.BioData = newBioData;
+                            userService.UpdateBioData(loggedInUser);
+                        };
+
+                        Application.Run(window);
+                    }
+                    else
+                    {
+                        // Clear text fields
+                        loginScreen.UsernameField.Text = "";
+                        loginScreen.PasswordField.Text = "";
+
+                        // Set cursor back to username TextField
+                        loginScreen.SetFocus(loginScreen.UsernameField);
+
+                        // Error dialog 
+                        var d = new Dialog("Error",
+                                    50,
+                                    10,
+                                    new Button("Ok", is_default: true)
+                                    {
+                                        Clicked = () =>
+                                        {
+                                            Application.RequestStop();
+                                        }
+                                    });
+
+                        var errorText = new Label(1, 2, "Wrong user or password!")
+                        {
+                            TextAlignment = TextAlignment.Centered,
+                            TextColor = (int)Color.BrightGreen
+                        };
+                        d.Add(errorText);
+
+                        errorText = new Label(1, 3, "Try to login again..");
+                        d.Add(errorText);
+
+                        Application.Run(d);
+
+                        //MainLoop.Invoke(() => )
+                    }
+                };
+
+                var tframe = top.Frame;
+                var loginTop = new Toplevel(tframe);
+                var win = new Window("Login View")
+                {
+                    X = 0,
+                    Y = 1,
+                    Width = Dim.Fill(),
+                    Height = Dim.Fill()
+                };
+
+                loginTop.Add(win);
+
+                var quitLoginViewButtton = new Button("Go back");
+                quitLoginViewButtton.Clicked += () => { loginTop.Running = false; };
+
+                win.Add(loginScreen);
+                win.Add(quitLoginViewButtton);
+                Application.Run(loginTop);
+            };
+
+            startScreen.RegisterOptionButton.Clicked += () =>
+            {
+                //top.Remove(startScreen);
+
+                // registerScreen = new RegisterView();
+                //RegisterAction(userService, window, registerScreen,loginScreen);
+
+                registerScreen.RegisterButton.Clicked += () =>
+                {
+                    var newUser = new UserEntitie
+                    {
+                        Username = registerScreen.UsernameField.Text.ToString(),
+                        Password = registerScreen.PasswordField.Text.ToString(),
+                        FirstName = registerScreen.FirstNameField.Text.ToString(),
+                        LastName = registerScreen.LastNameField.Text.ToString(),
+                        Email = registerScreen.EmailField.Text.ToString(),
+                        BioData = null
+                    };
+
+                    userService.Register(newUser);
+                    window.Remove(registerScreen);
+                    // window.Add(loginScreen);
 
 
-            var loginScreen = new LoginView();
-            window.Add(loginScreen);
-
-            loginScreen.LoginButton.Clicked += () =>
-               {
-                   // Try to get existing user
-                   var loggedInUser = userService.Login(loginScreen.UsernameField.Text.ToString(), loginScreen.PasswordField.Text.ToString());
-
-                   if (loggedInUser != null)
-                   {
-                       //Go to home screen -> add BioData
-                       window.Remove(loginScreen);
-                       mainView.Add(new TextField(10, 5, 30, "Welcome to next Screen  " + loginScreen.UsernameField.Text.ToString()));
-                   }
-                   else
-                   {
-                       // Clear text fields
-                       loginScreen.UsernameField.Text = "";
-                       loginScreen.PasswordField.Text = "";
-
-                       // Set cursor back to username TextField
-                       loginScreen.SetFocus(loginScreen.UsernameField);
-
-                       // Error dialog 
-                       var d = new Dialog("Error",
-                                           50,
-                                           10,
-                                           new Button("Ok", is_default: true)
-                                           {
-                                               Clicked = () =>
-                                               {
-                                                   Application.RequestStop();
-                                               }
-                                           });
-
-                       var errorText = new Label(1, 2, "Wrong user or password!")
-                       {
-                           TextAlignment = TextAlignment.Centered,
-                           TextColor = (int)Color.BrightGreen
-                       };
-                       d.Add(errorText);
-
-                       errorText = new Label(1, 3, "Try to login again..");
-                       d.Add(errorText);
-
-                       Application.Run(d);
-
-                       //MainLoop.Invoke(() => )
-
-                       //var errorQuery = new Dialog("Error", 80, 5);
-                       //window.Add(errorQuery);
-
-                   }
+                    //TODO what after register?
+                    window.Add(new TextField(10, 5, 99, "Successfully registered user with username:  " + registerScreen.UsernameField.Text.ToString()));
+                    Application.Run();
+                };
 
 
-               };
+                var regTop = new Toplevel(top.Frame);
+                var win = new Window("Register View")
+                {
+                    X = 0,
+                    Y = 1,
+                    Width = Dim.Fill(),
+                    Height = Dim.Fill()
+                };
 
-            //var registerScreen = new RegisterView();
-            //window.Add(registerScreen);
+                regTop.Add(win);
+                var quitLoginViewButtton = new Button("Go back");
+                quitLoginViewButtton.Clicked += () => { regTop.Running = false; };
 
-            //registerScreen.RegisterButton.Clicked += () =>
-            //{
-            //    var newUser = new UserEntitie
-            //    {
-            //        Username = registerScreen.UsernameField.Text.ToString(),
-            //        Password = registerScreen.PasswordField.Text.ToString(),
-            //        FirstName = registerScreen.FirstNameField.Text.ToString(),
-            //        LastName = registerScreen.LastNameField.Text.ToString(),
-            //        Email = registerScreen.EmailField.Text.ToString(),
-            //        BioData = null
-            //    };
+                win.Add(registerScreen);
 
-            //    userService.Register(newUser);
-            //    window.Remove(registerScreen);
-            //    //window.Add(loginScreen);
-            //    mainView.Add(new TextField(10, 5, 99, "Successfully registered user with username:  " + registerScreen.UsernameField.Text.ToString()));
+                win.Add(quitLoginViewButtton);
 
-            //};
+                Application.Run(regTop);
 
+            };
 
+            // Application.Refresh();
             Application.Run();
 
-            //var newUser = new UserEntitie
-            //{
-            //    Username = "Gosho",
-            //    Email = "dsakd@abv.bg",
-            //    Password = "123",
-            //    FirstName = "uvan",
-            //    LastName = "Ivanov",
-            //};
+        }
 
 
-            //userService.Register(newUser);
+        private static bool Quit()
+        {
+            var n = MessageBox.Query(50, 7, "Quit App", "Are you sure you want to quit FitnessAdvisor?", "Yes", "No");
+            return n == 0;
+        }
 
-            //db.UserRepository
-            //    .GetAllUsers()
-            //    .ToList()
-            //    .ForEach(u => Console.WriteLine($"{u.UserId}  {u.Username} {u.Password}"));
+        private static void LoginAction(UserService userService, Window window, LoginView loginScreen)
+        {
 
-            //var bioDataToAdd = new BioDataEntitie()
-            //{
-            //    Weight = 90,
-            //    Height = 190,
-            //    NeckSize = 60,
-            //    WaistSize = 95,
-            //};
+        }
 
-            //var existingUser = db.UserRepository.GetById(5);
+        private static void RegisterAction(UserService userService, Window window, RegisterView registerScreen, LoginView loginScreen)
+        {
+            registerScreen.RegisterButton.Clicked += () =>
+            {
+                var newUser = new UserEntitie
+                {
+                    Username = registerScreen.UsernameField.Text.ToString(),
+                    Password = registerScreen.PasswordField.Text.ToString(),
+                    FirstName = registerScreen.FirstNameField.Text.ToString(),
+                    LastName = registerScreen.LastNameField.Text.ToString(),
+                    Email = registerScreen.EmailField.Text.ToString(),
+                    BioData = null
+                };
 
-            //existingUser.BioData = bioDataToAdd;
+                userService.Register(newUser);
+                window.Remove(registerScreen);
+                // window.Add(loginScreen);
 
-            ////var editedUser = new UserEntitie()
-            ////{
-            ////    Username = existingUser.Username,
-            ////    Email = existingUser.Email,
-            ////    Password = existingUser.Password,
-            ////    FirstName = existingUser.FirstName,
-            ////    LastName = existingUser.LastName,
-            ////    BioData = bioDataToAdd
-            ////};
 
-            //db.UserRepository.Update(existingUser);
-
-            //db.UserRepository
-            //.GetAllUsers()
-            //.ToList()
-            //.ForEach(u => Console.WriteLine($"{u.UserId}  {u.Username} {u.Password}"));
+                //TODO 
+                window.Add(new TextField(10, 5, 99, "Successfully registered user with username:  " + registerScreen.UsernameField.Text.ToString()));
+                Application.Run();
+            };
         }
     }
 }

@@ -46,6 +46,18 @@ namespace App.Core.Services
             db.UserRepository.Add(userToCreate);
         }
 
+        public void UpdateBioData(UserEntitie loggedInUser)
+        {
+            //loggedInUser.BioData = new BioDataEntitie();
+            //loggedInUser.BioData.Weight = (double)85;
+            //loggedInUser.BioData.Height = (double)85;
+            //loggedInUser.BioData.HipsSize = (double)85;
+            //loggedInUser.BioData.WaistSize = (double)85;
+            //loggedInUser.BioData.NeckSize = (double)85;
+            //loggedInUser.BioData = new BioDataEntitie{ Weight = bioData.Weight,
+            //Height = bioData.Height};
 
+            db.UserRepository.Update(loggedInUser);
+        }
     }
 }
