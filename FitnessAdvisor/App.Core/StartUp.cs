@@ -4,6 +4,8 @@ using App.Data;
 using App.Data.Entities;
 using App.Models.Calculators;
 using App.Models.Enums;
+using App.Models.GeneralPurpose;
+using App.Models.Supplements;
 using App.Models.UserInfo;
 using Mono.Terminal;
 using System;
@@ -16,14 +18,6 @@ namespace App.Core
     {
         public static void Main(string[] args)
         {
-            //BioData bioData = new BioData(23, GenderType.Female, 93, 189, 42, 89, 95);
-            //User user = new User("Martin", bioData);
-
-            //BodyCalculator bC = new BodyCalculator();
-
-            //Console.WriteLine(bC.CalculateBodyFat(user));
-            //Console.WriteLine(bC.CalculateCalories(user));
-
             var db = new DbContext();
             var userService = new UserService(db);
             UserEntitie loggedUser = null;
@@ -169,6 +163,14 @@ namespace App.Core
             //.GetAllUsers()
             //.ToList()
             //.ForEach(u => Console.WriteLine($"{u.UserId}  {u.Username} {u.Password}"));
+
+          /*  BioData bioData = new BioData(23, GenderType.Male, 93, 190, 42, 86, 90);
+            User ivan = new User("Ivan", bioData);
+            BodyCalculator bodyCalculator = new BodyCalculator();
+            ivan.Goal = new Bulk(ivan.BioData.Weight, bodyCalculator.CalculateBodyFat(ivan), bodyCalculator.CalculateCalories(ivan));
+            Supplement amix = new Supplement("Amix", "Fusion", Category.Protein, 70, "...");
+            ivan.Goal.AddSupplement(amix);
+            Console.WriteLine(ivan.Goal.ToString());*/
         }
     }
 }
