@@ -7,12 +7,19 @@ namespace App.GUI
 {
     public class MainWindow
     {
-        public static void Main(string[] args)
-        {
-            //Application.Init();
+        //Application.Init();
 
-            Toplevel top = Application.Top;
-            Window win = new Window(new Rect(0, 1, top.Frame.Width, top.Frame.Height - 1), "FitApp");
+        private readonly Toplevel top;
+        private readonly Window window;
+
+        public MainWindow()
+        {
+            this.top = Application.Top;
+            this.window = new Window(new Rect(0, 1, Application.Top.Frame.Width, Application.Top.Frame.Height - 1), "FitApp");
         }
+
+        public Toplevel Top => this.top;
+
+        public Window Window => this.window;
     }
 }
