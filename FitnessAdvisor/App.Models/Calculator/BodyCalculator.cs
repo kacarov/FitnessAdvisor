@@ -2,8 +2,6 @@
 using App.Models.Enums;
 using App.Models.UserInfo;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace App.Models.Calculators
 {
@@ -49,7 +47,6 @@ namespace App.Models.Calculators
             }
 
             return calories;
-            
         }
     }
 }

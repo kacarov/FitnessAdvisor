@@ -37,9 +37,6 @@ namespace App.Models.UserInfo
                 this.username = value;
             }
         }
-
-       
-
         public BioData BioData
         {
             get
@@ -49,6 +46,21 @@ namespace App.Models.UserInfo
             set
             {
                 this.bioData = value;
+            }
+        }
+        public IBodyTransformationGoal Goal
+        {
+            get
+            {
+                return this.goal;
+            }
+            set
+            {
+                if(value == null)
+                {
+                    throw new ArgumentException("Goal cannot be null.");
+                }
+                goal = value;
             }
         }
     }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace App.Models.Training
@@ -10,9 +9,11 @@ namespace App.Models.Training
         private string weightLiftTip;
         private string cardioTip;
 
-        public TrainingType(string weightLiftTip, string cardioTip)
+        public TrainingType(string description, string weightLiftTip, string cardioTip)
         {
-            
+            Description = description;
+            WeightLiftTip = weightLiftTip;
+            CardioTip = cardioTip;
         }
 
         public string Description
@@ -21,13 +22,9 @@ namespace App.Models.Training
             {
                 return this.description;
             }
-            set
+            private set
             {
-                if(value == null)
-                {
-                    throw new ArgumentNullException("Description cannot be null");
-                }
-                this.description = value;
+                this.description = value ?? throw new ArgumentNullException("Description cannot be null");
             }
         }
         public string WeightLiftTip
@@ -36,15 +33,30 @@ namespace App.Models.Training
             {
                 return this.weightLiftTip;
             }
-            set
+            private set
             {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("The tip for  cannot be null");
-                }
-                this.weightLiftTip = value;
+                this.weightLiftTip = value ?? throw new ArgumentNullException("Weight lifting tip cannot be null");
+            }
+        }
+        public string CardioTip
+        {
+            get
+            {
+                return this.cardioTip;
+            }
+            private set
+            {
+                this.cardioTip = value ?? throw new ArgumentNullException("Cardio tip cannot be null");
             }
         }
 
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine(Description + ":");
+            builder.AppendLine("Weight lift Tip:\n" + WeightLiftTip);
+            builder.AppendLine("Cardio tip:\n" + CardioTip);
+            return builder.ToString();
+        }
     }
 }
