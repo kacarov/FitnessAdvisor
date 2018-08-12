@@ -28,7 +28,7 @@ namespace App.Models.Supplements
             {
                 return this.brand;
             }
-            set
+            private set
             {
                 this.brand = value ?? throw new ArgumentException("Brand cannot be null");
             }
@@ -40,13 +40,13 @@ namespace App.Models.Supplements
             {
                 return this.name;
             }
-            set
+            private set
             {
                 this.name = value ?? throw new ArgumentException("Name cannot be null");
             }
         }
 
-        public SupplementCategoryType Category { get; set; }
+        public SupplementCategoryType Category { get; private set; }
 
         public int ServingSize
         {
@@ -54,7 +54,7 @@ namespace App.Models.Supplements
             {
                 return this.servingSize;
             }
-            set
+            private set
             {
                 if (value < 0)
                 {
@@ -70,7 +70,7 @@ namespace App.Models.Supplements
             {
                 return this.description;
             }
-            set
+            private set
             {
                 this.description = value ?? throw new ArgumentException("Description cannot be null");
             }

@@ -7,9 +7,6 @@ using App.Models.Contracts;
 using App.Models.Enums;
 using App.Models.GeneralPurpose;
 using App.Models.UserInfo;
-using Mono.Terminal;
-using System;
-using System.Linq;
 using Terminal.Gui;
 
 namespace App.Core
@@ -18,11 +15,11 @@ namespace App.Core
     {
         public static void Main(string[] args)
         {
-            var db = new DbContext();
-            var userService = new UserService(db);
+            DbContext db = new DbContext();
+            UserService userService = new UserService(db);
 
             //TODO static or singleton
-            var bodyCalculator = new BodyCalculator();
+            BodyCalculator bodyCalculator = new BodyCalculator();
 
             UserEntitie loggedInUser = null;
 
@@ -38,7 +35,13 @@ namespace App.Core
             Application.Init();
 
             Toplevel top = Application.Top;
-            Window window = new Window("FitApp") { X = 0, Y = 1, Width = Dim.Fill(), Height = Dim.Fill() };
+            Window window = new Window("FitApp")
+            {
+                X = 0,
+                Y = 1,
+                Width = Dim.Fill(),
+                Height = Dim.Fill()
+            };
 
             top.Add(window);
             top.Add(startScreen);
@@ -75,70 +78,87 @@ namespace App.Core
                 {
                     window.Remove(loginScreen);
 
-                    bioScreen.Add(new Label(10, 5, "Welcome " + loggedInUser.Username));
-                    window.Add(bioScreen);
-
-                    bioScreen.ConfirmButton.Clicked += () =>
+                    //chek if user already got training program advise
+                    if (!string.IsNullOrEmpty(loggedInUser.TrainingProgramAdvise))
                     {
-                        BioDataEntitie newBioData = new BioDataEntitie
+                        window.Add(new TextView { Text = loggedInUser.TrainingProgramAdvise });
+
+                        Application.Run(window);
+                    }
+                    else
+                    {
+                        bioScreen.Add(new Label(10, 3, "Welcome " + loggedInUser.Username) { TextAlignment = TextAlignment.Centered });
+                        window.Add(bioScreen);
+
+                        bioScreen.ConfirmButton.Clicked += () =>
                         {
-                            Age = int.Parse(bioScreen.AgeTextField.Text.ToString()),
-                            Weight = double.Parse(bioScreen.WeightTextField.Text.ToString()),
-                            Height = double.Parse(bioScreen.HeightTextField.Text.ToString()),
-                            NeckSize = double.Parse(bioScreen.NeckSizeeTextField.Text.ToString()),
-                            WaistSize = double.Parse(bioScreen.WaistSizeTextField.Text.ToString()),
-                            HipsSize = double.Parse(bioScreen.HipsSizeTextField.Text.ToString()),
-                            Gender = int.Parse(bioScreen.GenderRadioGroup.Selected.ToString())
+                            BioDataEntitie newBioData = new BioDataEntitie
+                            {
+                                Age = int.Parse(bioScreen.AgeTextField.Text.ToString()),
+                                Weight = double.Parse(bioScreen.WeightTextField.Text.ToString()),
+                                Height = double.Parse(bioScreen.HeightTextField.Text.ToString()),
+                                NeckSize = double.Parse(bioScreen.NeckSizeeTextField.Text.ToString()),
+                                WaistSize = double.Parse(bioScreen.WaistSizeTextField.Text.ToString()),
+                                HipsSize = double.Parse(bioScreen.HipsSizeTextField.Text.ToString()),
+                                Gender = int.Parse(bioScreen.GenderRadioGroup.Selected.ToString())
+                            };
+
+                            loggedInUser.BioData = newBioData;
+                            userService.UpdateUser(loggedInUser);
+
+                            window.Remove(bioScreen);
+                            window.Add(chooseGoalScreen);
+                            chooseGoalScreen.SetFocus(chooseGoalScreen.RadioGroup);
+
+                            Application.Run(window);
                         };
 
-                        loggedInUser.BioData = newBioData;
-                        userService.UpdateBioData(loggedInUser);
-
-                        window.Remove(bioScreen);
-                        window.Add(chooseGoalScreen);
-                        chooseGoalScreen.SetFocus(chooseGoalScreen.RadioGroup);
-                        Application.Run(window);
-                    };
-                    
-                    //Set transformation goal     
-                    chooseGoalScreen.SelectButton.Clicked += () =>
-                    {
-                        //mapper BiodataEntitie to Biodata
-                        BioData userBioData = new BioData(loggedInUser.BioData.Age, (GenderType)loggedInUser.BioData.Gender,
-                            loggedInUser.BioData.Weight, loggedInUser.BioData.Height, loggedInUser.BioData.NeckSize,
-                            loggedInUser.BioData.WaistSize, loggedInUser.BioData.HipsSize);
-
-                        //mapper UserEntitie to User
-                        User user = new User(loggedInUser.Username, userBioData);
-
-                        var currentFatPerc = bodyCalculator.CalculateBodyFat(user);
-                        var caloriesNeed = bodyCalculator.CalculateCalories(user);
-
-                        // Use factory?
-                        IBodyTransformationGoal goal = null;
-
-                        switch (chooseGoalScreen.RadioGroup.Selected)
+                        //Set transformation goal     
+                        chooseGoalScreen.SelectButton.Clicked += () =>
                         {
-                            case 0:
-                                goal = new Bulk(user.BioData.Weight, currentFatPerc, caloriesNeed);
-                                break;
-                            case 1:
-                                goal = new Maintain(user.BioData.Weight, currentFatPerc, caloriesNeed);
-                                break;
-                            case 2:
-                                goal = new Cutting(user.BioData.Weight, currentFatPerc, caloriesNeed);
-                                break;
-                        }
+                            //mapper BiodataEntitie to Biodata
+                            BioData userBioData = new BioData(loggedInUser.BioData.Age, (GenderType)loggedInUser.BioData.Gender,
+                                loggedInUser.BioData.Weight, loggedInUser.BioData.Height, loggedInUser.BioData.NeckSize,
+                                loggedInUser.BioData.WaistSize, loggedInUser.BioData.HipsSize);
 
-                        window.Remove(chooseGoalScreen);
+                            //mapper UserEntitie to User
+                            User user = new User(loggedInUser.Username, userBioData);
 
-                        if (goal != null)
-                        {
-                            finalAdvise = goal.ToString();
-                            window.Add(new TextView { Text = finalAdvise });
-                        }
+                            var currentFatPerc = bodyCalculator.CalculateBodyFat(user);
+                            var caloriesNeed = bodyCalculator.CalculateCalories(user);
 
-                        Application.Run(window);
+                            // Use factory?
+                            IBodyTransformationGoal goal = null;
+
+                            switch (chooseGoalScreen.RadioGroup.Selected)
+                            {
+                                case 0:
+                                    goal = new Bulk(user.BioData.Weight, currentFatPerc, caloriesNeed);
+                                    break;
+                                case 1:
+                                    goal = new Maintain(user.BioData.Weight, currentFatPerc, caloriesNeed);
+                                    break;
+                                case 2:
+                                    goal = new Cutting(user.BioData.Weight, currentFatPerc, caloriesNeed);
+                                    break;
+                            }
+
+                            window.Remove(chooseGoalScreen);
+
+                            if (goal != null)
+                            {
+                                user.SetTransformationGoal(goal);
+                                finalAdvise = user.Goal.ToString();
+
+                                //Update user goal at db
+                                loggedInUser.TrainingProgramAdvise = finalAdvise;
+                                userService.UpdateUser(loggedInUser);
+
+                                window.Add(new TextView { Text = finalAdvise });
+                            }
+
+                            Application.Run(window);
+                        };
                     };
 
                     Application.Run(window);

@@ -2,7 +2,7 @@
 {
     public interface IMealPlan
     {
-        int CaloricNeeds { get; set; }
+        int CaloricNeeds { get; }
 
         int GramsOfProtein { get; }
 

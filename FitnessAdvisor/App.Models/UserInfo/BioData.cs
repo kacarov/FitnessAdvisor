@@ -33,7 +33,7 @@ namespace App.Models.UserInfo
             {
                 return this.age;
             }
-            set
+            private set
             {
                 if (value < 16 || value > 120)
                 {
@@ -49,7 +49,7 @@ namespace App.Models.UserInfo
             {
                 return this.gender;
             }
-            set
+            private set
             {
                 this.gender = value;
             }
@@ -61,7 +61,7 @@ namespace App.Models.UserInfo
             {
                 return this.weight;
             }
-            set
+            private set
             {
                 this.weight = value;
             }
@@ -72,7 +72,7 @@ namespace App.Models.UserInfo
             {
                 return this.height;
             }
-            set
+            private set
             {
                 this.height = value;
             }
@@ -83,7 +83,7 @@ namespace App.Models.UserInfo
             {
                 return this.neckSize;
             }
-            set
+            private set
             {
                 this.neckSize = value;
             }
@@ -94,7 +94,7 @@ namespace App.Models.UserInfo
             {
                 return this.waistSize;
             }
-            set
+            private set
             {
                 this.waistSize = value;
             }
@@ -105,7 +105,7 @@ namespace App.Models.UserInfo
             {
                 return this.hipsSize;
             }
-            set
+            private set
             {
                 this.hipsSize = value;
             }
@@ -117,7 +117,7 @@ namespace App.Models.UserInfo
             {
                 return this.bodyFatPercentage;
             }
-            set
+            private set
             {
                 this.bodyFatPercentage = value;
             }

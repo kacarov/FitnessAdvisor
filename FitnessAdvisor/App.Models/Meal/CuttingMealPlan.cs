@@ -4,14 +4,21 @@ namespace App.Models.Meal
 {
     public class CuttingMealPlan : MealPlan
     {
-        public CuttingMealPlan(int caloricNeeds) : base(caloricNeeds)
+        public CuttingMealPlan(int caloricNeeds)
+            : base(caloricNeeds)
         {
-            double caloriesFromProtein = (45.0 / 100) * caloricNeeds;
-            double caloriesFromCarbs = (20.0 / 100) * caloricNeeds;
-            double caloriesFromFat = (35.0 / 100) * caloricNeeds;
-            GramsOfProtein = (int)(Math.Round(caloriesFromProtein, 0)) / 4;
-            GramsOfCarbs = (int)(Math.Round(caloriesFromCarbs, 0)) / 4;
-            GramsOfFats = (int)(Math.Round(caloriesFromFat, 0) / 9);
+            this.CalculateMealPlan();
+        }
+
+        protected override void CalculateMealPlan()
+        {
+            double caloriesFromProtein = (45.0 / 100) * this.CaloricNeeds;
+            double caloriesFromCarbs = (20.0 / 100) * this.CaloricNeeds;
+            double caloriesFromFat = (35.0 / 100) * this.CaloricNeeds;
+
+            base.GramsOfProtein = (int)(Math.Round(caloriesFromProtein, 0)) / 4;
+            base.GramsOfCarbs = (int)(Math.Round(caloriesFromCarbs, 0)) / 4;
+            base.GramsOfFats = (int)(Math.Round(caloriesFromFat, 0) / 9);
         }
     }
 }

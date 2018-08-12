@@ -19,5 +19,7 @@ namespace App.Data.Entities
 
         //[BsonRef]
         public BioDataEntitie BioData { get; set; }
+
+        public string TrainingProgramAdvise { get; set; }
     }
 }
