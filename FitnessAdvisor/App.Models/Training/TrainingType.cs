@@ -1,7 +1,7 @@
 ﻿using App.Models.Contracts;
 using System;
 using System.Text;
-//LOOK FOR VALIDATIONS
+
 namespace App.Models.Training
 {
     public class TrainingType : ITrainingType
@@ -57,9 +57,15 @@ namespace App.Models.Training
         {
             StringBuilder builder = new StringBuilder();
 
+            builder.AppendLine("--------------------------------");
             builder.AppendLine(this.Description + ":");
-            builder.AppendLine("\nWeight lift Tip:\n\n" + this.WeightLiftTip);
-            builder.AppendLine("\nCardio tip:\n" + this.CardioTip);
+            builder.AppendLine("--------------------------------");
+            builder.AppendLine("\nWeight lift Tip:");
+            builder.AppendLine("--------------------------------\n");
+            builder.AppendLine(this.WeightLiftTip);
+            builder.AppendLine("\nCardio tip:");
+            builder.AppendLine("--------------------------------\n");
+            builder.AppendLine(this.CardioTip);
 
             return builder.ToString();
         }

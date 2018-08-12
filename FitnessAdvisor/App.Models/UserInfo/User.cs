@@ -61,5 +61,10 @@ namespace App.Models.UserInfo
         {
             this.Goal = goal;
         }
+
+        public override string ToString()
+        {
+            return this.Goal.ToString();
+        }
     }
 }

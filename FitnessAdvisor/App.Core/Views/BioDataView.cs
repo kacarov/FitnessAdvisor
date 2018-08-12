@@ -1,7 +1,4 @@
 ﻿using App.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Terminal.Gui;
 
 namespace App.Core.Views
@@ -42,16 +39,16 @@ namespace App.Core.Views
         private void InitializeViewElements()
         {
             this.confirmButton = new Button(12, 24, "_Update biodata", true);
-            this.ageTextField = new TextField(14, 8, 40, "");
-            this.weightTextField = new TextField(14, 10, 40, "");
-            this.heightTextField = new TextField(14, 12, 40, "");
-            this.neckSizeeTextField = new TextField(14, 14, 40, "");
-            this.waistSizeTextField = new TextField(14, 16, 40, "");
-            this.hipsSizeTextField = new TextField(14, 18, 40, "");
+            this.ageTextField = new TextField(14, 8, 40, "Age must be between 16 and 120");
+            this.weightTextField = new TextField(14, 10, 40, "Weight [30-300]");
+            this.heightTextField = new TextField(14, 12, 40, "Height [100-300]");
+            this.neckSizeeTextField = new TextField(14, 14, 40, "Neck size [30-130]");
+            this.waistSizeTextField = new TextField(14, 16, 40, "Waist size [50-250]");
+            this.hipsSizeTextField = new TextField(14, 18, 40, "Hips size [50-250]");
             this.genderRadioGroup = new RadioGroup(14, 20, new string[] { GenderType.Male.ToString(), GenderType.Female.ToString() });
 
             this.Add(
-                  new Label(4, 6, "Please fill your metrics!") { TextColor = (int)Color.BrightRed },
+                  new Label(18, 5, "Please fill your metrics!") { TextColor = (int)Color.BrightRed, },
                   new Label(3, 8, "Age: "),
                   this.ageTextField,
                   new Label(3, 10, "Weight: "),

@@ -1,19 +1,19 @@
 ﻿using App.Models.Contracts;
 using System;
 using System.Text;
-//LOOK FOR VALIDATIONS
+
 namespace App.Models.Meal
 {
-   public abstract class MealPlan : IMealPlan
+    public abstract class MealPlan : IMealPlan
     {
         private int caloricNeeds;
         private int gramsOfProtein;
         private int gramsOfCarbs;
         private int gramsOfFats;
 
-        public MealPlan(int caloricNeeds)
+        protected MealPlan(int caloricNeeds)
         {
-            CaloricNeeds = caloricNeeds;
+            this.CaloricNeeds = caloricNeeds;
         }
 
         public int GramsOfProtein
@@ -22,15 +22,16 @@ namespace App.Models.Meal
             {
                 return this.gramsOfProtein;
             }
-           protected set
+            protected set
             {
-                if(value < 0)
+                if (value < 0)
                 {
                     throw new ArgumentException("Grams of protein cannot be null.");
                 }
                 this.gramsOfProtein = value;
             }
         }
+
         public int GramsOfCarbs
         {
             get
@@ -46,6 +47,7 @@ namespace App.Models.Meal
                 this.gramsOfCarbs = value;
             }
         }
+
         public int GramsOfFats
         {
             get
@@ -61,13 +63,14 @@ namespace App.Models.Meal
                 this.gramsOfFats = value;
             }
         }
+
         public int CaloricNeeds
         {
             get
             {
                 return this.caloricNeeds;
             }
-            set
+            protected set
             {
                 if (value < 0)
                 {
@@ -76,14 +79,19 @@ namespace App.Models.Meal
                 caloricNeeds = value;
             }
         }
+
+        protected abstract void CalculateMealPlan();
+
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendLine("Caloric needs: " + CaloricNeeds);
-            builder.AppendLine("Protein: " + GramsOfProtein + "g");
-            builder.AppendLine("Carbs: " + GramsOfCarbs + "g");
-            builder.AppendLine("Fats: " + GramsOfFats + "g");
+
+            builder.AppendLine("----> Caloric needs: " + this.CaloricNeeds);
+            builder.AppendLine("----> Protein: " + this.GramsOfProtein + "g");
+            builder.AppendLine("----> Carbs: " + this.GramsOfCarbs + "g");
+            builder.AppendLine("----> Fats: " + this.GramsOfFats + "g");
+
             return builder.ToString();
-           }
+        }
     }
 }

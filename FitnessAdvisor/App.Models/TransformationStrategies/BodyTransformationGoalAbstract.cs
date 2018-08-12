@@ -138,11 +138,12 @@ namespace App.Models.TransformationStrategies
         {
             StringBuilder builder = new StringBuilder();
 
-            builder.AppendLine("Personal program:");
+            builder.AppendLine("Your personal program:\n");
             builder.AppendLine("Program start date: " + this.StartDate);
             builder.AppendLine("Program end date: " + this.EndDate + "\n");
-            builder.AppendLine("Target weight range: " + this.MinWeightTarget + " - " + this.MaxWeightTarget);
-            builder.AppendLine($"Target body fat range: {this.MinFatPercentTarget:0.00} - {this.MaxFatPercentTarget:0.00}" + "\n");
+            builder.AppendLine($"Target weight range: [ {this.MinWeightTarget} kg <<--->> {this.MaxWeightTarget} kg ]");
+            builder.AppendLine($"Target body fat range:  [ {this.MinFatPercentTarget:0.00} % <<--->> {this.MaxFatPercentTarget:0.00} % ]" + "\n");
+            builder.AppendLine("Your daily meal plan:");
             builder.AppendLine(this.MealPlan.ToString());
 
             if (this.supplements.Count > 0)

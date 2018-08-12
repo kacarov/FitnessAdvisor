@@ -46,7 +46,7 @@ namespace App.Core.Services
             db.UserRepository.Add(userToCreate);
         }
 
-        public void UpdateBioData(UserEntitie loggedInUser)
+        public void UpdateUser(UserEntitie loggedInUser)
         {
             //loggedInUser.BioData = new BioDataEntitie();
             //loggedInUser.BioData.Weight = (double)85;
