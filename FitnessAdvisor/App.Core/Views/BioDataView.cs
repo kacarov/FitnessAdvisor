@@ -42,7 +42,7 @@ namespace App.Core.Views
             this.ageTextField = new TextField(14, 8, 40, "Age must be between 16 and 120");
             this.weightTextField = new TextField(14, 10, 40, "Weight [30-300]");
             this.heightTextField = new TextField(14, 12, 40, "Height [100-300]");
-            this.neckSizeeTextField = new TextField(14, 14, 40, "Neck size [30-130]");
+            this.neckSizeeTextField = new TextField(14, 14, 40, "Neck size [30-90]");
             this.waistSizeTextField = new TextField(14, 16, 40, "Waist size [50-250]");
             this.hipsSizeTextField = new TextField(14, 18, 40, "Hips size [50-250]");
             this.genderRadioGroup = new RadioGroup(14, 20, new string[] { GenderType.Male.ToString(), GenderType.Female.ToString() });
