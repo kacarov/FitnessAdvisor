@@ -1,4 +1,5 @@
-﻿using System;
+﻿using App.Core.Log;
+using System;
 
 namespace App.Core
 {
@@ -12,8 +13,8 @@ namespace App.Core
             }
             catch (Exception ex)
             {
-                //TODO logger to log errors
-
+                FileLogger logger = new FileLogger();
+                logger.Log(ex.Message);
             }
 
         }
