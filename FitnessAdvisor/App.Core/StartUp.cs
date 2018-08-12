@@ -3,6 +3,7 @@ using App.Core.Views;
 using App.Data;
 using App.Data.Entities;
 using App.Models.Calculators;
+using App.Models.Contracts;
 using App.Models.Enums;
 using App.Models.GeneralPurpose;
 using App.Models.UserInfo;
@@ -30,7 +31,7 @@ namespace App.Core
             RegisterView registerScreen = new RegisterView();
             StartScreen startScreen = new StartScreen();
             BioDataView bioScreen = new BioDataView();
-            ChooseGoalView chooseGoalView = new ChooseGoalView();
+            ChooseGoalView chooseGoalScreen = new ChooseGoalView();
 
             string finalAdvise = string.Empty;
 
@@ -94,7 +95,7 @@ namespace App.Core
                         userService.UpdateBioData(loggedInUser);
 
                         window.Remove(bioScreen);
-                        window.Add(chooseGoalView);
+                        window.Add(chooseGoalScreen);
                         Application.Run(window);
                     };
 
@@ -102,8 +103,9 @@ namespace App.Core
 
                     //TODO
                     //Set transformation goal
-                    var goalChoice = chooseGoalView.RadioGroup.Selected;
-                    chooseGoalView.SelectButton.Clicked += () =>
+                    var goalChoice = chooseGoalScreen.RadioGroup.Selected;
+
+                    chooseGoalScreen.SelectButton.Clicked += () =>
                     {
                         //mapper BiodataEntitie to Biodata
                         BioData userBioData = new BioData(loggedInUser.BioData.Age, (GenderType)loggedInUser.BioData.Gender,
@@ -116,20 +118,36 @@ namespace App.Core
                         var currentFatPerc = bodyCalculator.CalculateBodyFat(user);
                         var caloriesNeed = bodyCalculator.CalculateCalories(user);
 
-                        //Bulk
-                        if (goalChoice == 0)
+                        //Bulk Use factory?
+                        IBodyTransformationGoal goal = null;
+
+                        switch (goalChoice)
                         {
-                            var goal = new Bulk(user.BioData.Weight, currentFatPerc, caloriesNeed);
-                            finalAdvise = goal.ToString();
-
-
-                            window.Add(new Label(5, 5, finalAdvise));
-                            Application.Run(window);
+                            case 0:
+                                goal = new Bulk(user.BioData.Weight, currentFatPerc, caloriesNeed);
+                                break;
+                            case 1:
+                                goal = new Maintain(user.BioData.Weight, currentFatPerc, caloriesNeed);
+                                break;
+                            case 2:
+                                goal = new Cutting(user.BioData.Weight, currentFatPerc, caloriesNeed);
+                                break;
                         }
+
+
+                        window.Remove(chooseGoalScreen);
+
+                        if (goal != null)
+                        {
+                            finalAdvise = goal.ToString();
+                            window.Add(new TextView { Text = finalAdvise });
+                        }
+
+                        Application.Run(window);
                     };
 
                     //window.Add(new Label(5,5, finalAdvise));
-                
+
 
                     Application.Run(window);
                 }

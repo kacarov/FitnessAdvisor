@@ -6,11 +6,7 @@ namespace App.Models.GeneralPurpose
 {
     public class Bulk : BodyTransformationGoalAbstract
     {
-        public Bulk(double currentWeight, double currentFatPercent, int caloricNeeds)
-            : base(caloricNeeds + 1000, currentWeight + 3, currentWeight + 5, currentFatPercent, currentFatPercent + 2)
-        {
-
-            string weightLiftTip = "Most people have the mentality that more is better. This is not the case with training.\n" +
+        private const string weightLiftTip = "Most people have the mentality that more is better. This is not the case with training.\n" +
                                    "Most of the time the people who have that mindset are overtraining and in turn minimizing their gains.\n" +
                                    "Depending on your exercise level, you could train smartly with 3-6 days in the gym.\n\n" +
                                    "You want to keep your workouts short but intense.This means that you should ideally\n" +
@@ -26,16 +22,22 @@ namespace App.Models.GeneralPurpose
                                    "way to train. Everyone is different. The fun part is trying new things to see what works best for you.\n" +
                                    "Keep training hard and never be afraid to switch things up.";
 
-            string cardioLiftTip = "This one isn't rocket science; you don't need a PhD to understand. Obviously when you\n" +
-                                    "do cardio, you use up fuel(calories). Calories are what you need to grow.You take away\n" +
-                                    "calories, you take away gains.Now I'm not saying to stop cardio altogether, because you\n" +
-                                    "don't need to.\n\n" +
-                                    "Cardio is actually a good way to keep from putting on body fat during a bulking phase\n" +
-                                    "and an excellent way to keep the heart healthy.\n\n" +
-                                    "Cardio also increases your appetite so you will be able to down some extra calories to\n" +
-                                    "make up for the loss you experienced during your workout.You can get away with doing\n" +
-                                    "some low - intensity cardio without losing lean mass gains, so do not be afraid to do\n" +
-                                    "cardio while bulking.";
+        private const string cardioLiftTip = @"This one isn't rocket science; you don't need a PhD to understand. Obviously when you\n" +
+                                "do cardio, you use up fuel(calories). Calories are what you need to grow.You take away\n" +
+                                "calories, you take away gains.Now I'm not saying to stop cardio altogether, because you\n" +
+                                "don't need to.\n\n" +
+                                "Cardio is actually a good way to keep from putting on body fat during a bulking phase\n" +
+                                "and an excellent way to keep the heart healthy.\n\n" +
+                                "Cardio also increases your appetite so you will be able to down some extra calories to\n" +
+                                "make up for the loss you experienced during your workout.You can get away with doing\n" +
+                                "some low - intensity cardio without losing lean mass gains, so do not be afraid to do\n" +
+                                "cardio while bulking.";
+
+        public Bulk(double currentWeight, double currentFatPercent, int caloricNeeds)
+            : base(caloricNeeds + 1000, currentWeight + 3, currentWeight + 5, currentFatPercent, currentFatPercent + 2)
+        {
+
+
 
             base.TrainingType = new TrainingType("Training tips while bulking", weightLiftTip, cardioLiftTip);
             base.MealPlan = new BulkingMealPlan(caloricNeeds + 1000);
