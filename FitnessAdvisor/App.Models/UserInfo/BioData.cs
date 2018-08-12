@@ -109,7 +109,6 @@ namespace App.Models.UserInfo
             {
                 this.hipsSize = value;
             }
-
         }
         public double BodyFatPercentage
         {
