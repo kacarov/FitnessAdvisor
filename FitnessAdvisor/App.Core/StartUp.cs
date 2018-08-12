@@ -96,15 +96,11 @@ namespace App.Core
 
                         window.Remove(bioScreen);
                         window.Add(chooseGoalScreen);
+                        chooseGoalScreen.SetFocus(chooseGoalScreen.RadioGroup);
                         Application.Run(window);
                     };
-
-                    //window.Add(chooseGoalView);
-
-                    //TODO
-                    //Set transformation goal
-                    var goalChoice = chooseGoalScreen.RadioGroup.Selected;
-
+                    
+                    //Set transformation goal     
                     chooseGoalScreen.SelectButton.Clicked += () =>
                     {
                         //mapper BiodataEntitie to Biodata
@@ -118,10 +114,10 @@ namespace App.Core
                         var currentFatPerc = bodyCalculator.CalculateBodyFat(user);
                         var caloriesNeed = bodyCalculator.CalculateCalories(user);
 
-                        //Bulk Use factory?
+                        // Use factory?
                         IBodyTransformationGoal goal = null;
 
-                        switch (goalChoice)
+                        switch (chooseGoalScreen.RadioGroup.Selected)
                         {
                             case 0:
                                 goal = new Bulk(user.BioData.Weight, currentFatPerc, caloriesNeed);
@@ -134,7 +130,6 @@ namespace App.Core
                                 break;
                         }
 
-
                         window.Remove(chooseGoalScreen);
 
                         if (goal != null)
@@ -145,9 +140,6 @@ namespace App.Core
 
                         Application.Run(window);
                     };
-
-                    //window.Add(new Label(5,5, finalAdvise));
-
 
                     Application.Run(window);
                 }

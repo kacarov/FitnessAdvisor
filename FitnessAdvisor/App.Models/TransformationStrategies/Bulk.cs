@@ -22,7 +22,7 @@ namespace App.Models.GeneralPurpose
                                    "way to train. Everyone is different. The fun part is trying new things to see what works best for you.\n" +
                                    "Keep training hard and never be afraid to switch things up.";
 
-        private const string cardioLiftTip = @"This one isn't rocket science; you don't need a PhD to understand. Obviously when you\n" +
+        private const string cardioLiftTip = "This one isn't rocket science; you don't need a PhD to understand. Obviously when you\n" +
                                 "do cardio, you use up fuel(calories). Calories are what you need to grow.You take away\n" +
                                 "calories, you take away gains.Now I'm not saying to stop cardio altogether, because you\n" +
                                 "don't need to.\n\n" +
@@ -33,12 +33,10 @@ namespace App.Models.GeneralPurpose
                                 "some low - intensity cardio without losing lean mass gains, so do not be afraid to do\n" +
                                 "cardio while bulking.";
 
+
         public Bulk(double currentWeight, double currentFatPercent, int caloricNeeds)
             : base(caloricNeeds + 1000, currentWeight + 3, currentWeight + 5, currentFatPercent, currentFatPercent + 2)
         {
-
-
-
             base.TrainingType = new TrainingType("Training tips while bulking", weightLiftTip, cardioLiftTip);
             base.MealPlan = new BulkingMealPlan(caloricNeeds + 1000);
         }
