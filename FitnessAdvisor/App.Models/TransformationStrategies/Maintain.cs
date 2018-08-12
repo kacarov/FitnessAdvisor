@@ -27,7 +27,7 @@ namespace App.Models.GeneralPurpose
 
 
         public Maintain(double currentWeight, double currentFatPercent, int caloricNeeds)
-            : base(caloricNeeds, currentWeight - 0.5, currentWeight + 0.5, currentFatPercent - 0.5, currentFatPercent + 0.5)
+            : base(currentWeight - 0.5, currentWeight + 0.5, currentFatPercent - 0.5, currentFatPercent + 0.5)
         {
             base.TrainingType = new TrainingType("Training tips while maintaining", weightLiftTip, cardioLiftTip);
             base.MealPlan = new MaintainMealPlan(caloricNeeds);

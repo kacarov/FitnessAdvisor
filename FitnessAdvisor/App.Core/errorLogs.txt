@@ -1,1 +1,2 @@
 ﻿8/12/2018 9:01:33 PM ---> Error: asd
+8/12/2018 10:55:40 PM ---> Error: Input string was not in a correct format.

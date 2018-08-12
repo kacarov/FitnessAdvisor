@@ -15,7 +15,7 @@ namespace App.Models.TransformationStrategies
         private IList<ISupplement> supplements;
         private IMealPlan mealPlan;
 
-        protected BodyTransformationGoalAbstract(int caloricNeeds, double minWeightTarget, double maxWeightTarget, double minFatPrecentTarget, double maxFatPercentTarget)
+        protected BodyTransformationGoalAbstract(double minWeightTarget, double maxWeightTarget, double minFatPrecentTarget, double maxFatPercentTarget)
         {
             this.MinWeightTarget = minWeightTarget;
             this.MaxWeightTarget = maxWeightTarget;

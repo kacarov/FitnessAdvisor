@@ -33,7 +33,7 @@ namespace App.Models.GeneralPurpose
                                "both before and after cardio.";
 
         public Cutting(double currentWeight, double currentFatPercent, int caloricNeeds)
-            : base(caloricNeeds - 1000, currentWeight - 5, currentWeight - 3, currentFatPercent - 3, currentFatPercent)
+            : base(currentWeight - 5, currentWeight - 3, currentFatPercent - 3, currentFatPercent)
         {
             base.TrainingType = new TrainingType("Training tips while cutting", weightLiftTip, cardioLiftTip);
             base.MealPlan = new CuttingMealPlan(caloricNeeds - 1000);

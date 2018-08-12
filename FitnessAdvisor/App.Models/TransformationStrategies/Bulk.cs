@@ -35,7 +35,7 @@ namespace App.Models.GeneralPurpose
 
 
         public Bulk(double currentWeight, double currentFatPercent, int caloricNeeds)
-            : base(caloricNeeds + 1000, currentWeight + 3, currentWeight + 5, currentFatPercent, currentFatPercent + 2)
+            : base(currentWeight + 3, currentWeight + 5, currentFatPercent, currentFatPercent + 2)
         {
             base.TrainingType = new TrainingType("Training tips while bulking", weightLiftTip, cardioLiftTip);
             base.MealPlan = new BulkingMealPlan(caloricNeeds + 1000);
