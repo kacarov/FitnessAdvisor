@@ -7,7 +7,7 @@ namespace App.Models.UserInfo
     {
         private string username;
         /* /// <summary>
-         /// What information do we need ? password? email?
+         /// What information do we need ? firstName LastName
          /// </summary>
          /// */
 
