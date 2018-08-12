@@ -1,10 +1,8 @@
 ﻿using App.Models.Contracts;
-using App.Models.Supplements;
-using App.Models.Training;
 using System;
 using System.Collections.Generic;
 using System.Text;
-//LOOK FOR VALIDATIONS
+
 namespace App.Models.TransformationStrategies
 {
     public abstract class BodyTransformationGoalAbstract : IBodyTransformationGoal
@@ -28,8 +26,8 @@ namespace App.Models.TransformationStrategies
             this.supplements = new List<ISupplement>();
         }
 
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime StartDate { get; private set; }
+        public DateTime EndDate { get; private set; }
 
         public double MinWeightTarget
         {
@@ -143,8 +141,8 @@ namespace App.Models.TransformationStrategies
             builder.AppendLine("Personal program:");
             builder.AppendLine("Program start date: " + this.StartDate);
             builder.AppendLine("Program end date: " + this.EndDate + "\n");
-            builder.AppendLine("Weight range: " + this.MinWeightTarget + " - " + this.MaxWeightTarget);
-            builder.AppendLine("Body fat range: " + this.MinFatPercentTarget + " - " + this.MaxFatPercentTarget + "\n");
+            builder.AppendLine("Target weight range: " + this.MinWeightTarget + " - " + this.MaxWeightTarget);
+            builder.AppendLine($"Target body fat range: {this.MinFatPercentTarget:0.00} - {this.MaxFatPercentTarget:0.00}" + "\n");
             builder.AppendLine(this.MealPlan.ToString());
 
             if (this.supplements.Count > 0)

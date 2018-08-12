@@ -57,9 +57,9 @@ namespace App.Models.Training
         {
             StringBuilder builder = new StringBuilder();
 
-            builder.AppendLine(Description + ":");
-            builder.AppendLine("Weight lift Tip:\n" + this.WeightLiftTip);
-            builder.AppendLine("Cardio tip:\n" + this.CardioTip);
+            builder.AppendLine(this.Description + ":");
+            builder.AppendLine("\nWeight lift Tip:\n\n" + this.WeightLiftTip);
+            builder.AppendLine("\nCardio tip:\n" + this.CardioTip);
 
             return builder.ToString();
         }

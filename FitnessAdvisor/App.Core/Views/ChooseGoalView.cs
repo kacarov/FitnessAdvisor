@@ -23,7 +23,7 @@ namespace App.Core.Views
         private void InitializeViewElements()
         {
             this.radioButtons = new RadioGroup(4, 12, new string[] { "Bulk", "Maintain", "Cutting" }, 0);
-            this.selectButton = new Button(8, 19, "Select");
+            this.selectButton = new Button(8, 19, "_Select");
 
             this.Add(
                   new Label(4, 8, "Choose your transformation strategy") { TextColor = (int)Color.BrightRed },
