@@ -23,7 +23,7 @@ namespace App.Core.Views
         private void InitializeViewElements()
         {
             this.loginOptionButton = new Button(115, 10, "_Login", true) { Frame = new Rect(20, 10, 55, 15) };
-            this.registerOptionButton = new Button(50, 20, "_Register") { Frame = new Rect(50, 10, 55, 15) };
+            this.registerOptionButton = new Button(50, 50, "_Register") { Frame = new Rect(50, 10, 55, 15) };
 
 
             this.Add(

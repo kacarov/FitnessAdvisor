@@ -7,7 +7,11 @@ namespace App.Models.Calculators
 {
     public class BodyCalculator : ICalculatable
     {
-        public BodyCalculator() { }
+        //TODO static or singleton 
+        public BodyCalculator()
+        {
+        }
+
         public double CalculateBodyFat(User user)
         {
             if (user == null)

@@ -6,7 +6,8 @@ namespace App.Models.GeneralPurpose
 {
     public class Bulk : BodyTransformationGoalAbstract
     {
-        public Bulk(double currentWeight, double currentFatPercent, int caloricNeeds) : base(caloricNeeds+1000, currentWeight + 3, currentWeight + 5, currentFatPercent, currentFatPercent + 2)
+        public Bulk(double currentWeight, double currentFatPercent, int caloricNeeds)
+            : base(caloricNeeds + 1000, currentWeight + 3, currentWeight + 5, currentFatPercent, currentFatPercent + 2)
         {
 
             string weightLiftTip = "Most people have the mentality that more is better. This is not the case with training.\n" +
@@ -39,6 +40,5 @@ namespace App.Models.GeneralPurpose
             base.TrainingType = new TrainingType("Training tips while bulking", weightLiftTip, cardioLiftTip);
             base.MealPlan = new BulkingMealPlan(caloricNeeds + 1000);
         }
-
     }
 }

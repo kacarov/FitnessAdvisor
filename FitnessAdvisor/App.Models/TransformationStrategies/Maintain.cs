@@ -6,7 +6,8 @@ namespace App.Models.GeneralPurpose
 {
     public class Maintain : BodyTransformationGoalAbstract
     {
-        public Maintain(double currentWeight, double currentFatPercent, int caloricNeeds) : base(caloricNeeds, currentWeight - 0.5, currentWeight + 0.5, currentFatPercent - 0.5, currentFatPercent + 0.5)
+        public Maintain(double currentWeight, double currentFatPercent, int caloricNeeds)
+            : base(caloricNeeds, currentWeight - 0.5, currentWeight + 0.5, currentFatPercent - 0.5, currentFatPercent + 0.5)
         {
 
             string weightLiftTip = "As far as training goes, much like your eating, it doesn't have to be as regimented or rigorous.\n" +

@@ -4,6 +4,7 @@ using App.Data;
 using App.Data.Entities;
 using App.Models.Calculators;
 using App.Models.Enums;
+using App.Models.GeneralPurpose;
 using App.Models.UserInfo;
 using Mono.Terminal;
 using System;
@@ -19,6 +20,9 @@ namespace App.Core
             var db = new DbContext();
             var userService = new UserService(db);
 
+            //TODO static or singleton
+            var bodyCalculator = new BodyCalculator();
+
             UserEntitie loggedInUser = null;
 
             //Views
@@ -26,6 +30,9 @@ namespace App.Core
             RegisterView registerScreen = new RegisterView();
             StartScreen startScreen = new StartScreen();
             BioDataView bioScreen = new BioDataView();
+            ChooseGoalView chooseGoalView = new ChooseGoalView();
+
+            string finalAdvise = string.Empty;
 
             Application.Init();
 
@@ -37,72 +44,6 @@ namespace App.Core
 
             startScreen.LoginOptionButton.Clicked += () =>
             {
-                loginScreen.LoginButton.Clicked += () =>
-                {
-                    // Try to get existing user
-                    loggedInUser = userService.Login(loginScreen.UsernameField.Text.ToString(), loginScreen.PasswordField.Text.ToString());
-
-                    if (loggedInUser != null)
-                    {
-                        window.Remove(loginScreen);
-
-                        bioScreen.Add(new TextField(10, 5, 25, "Welcome " + loggedInUser.Username));
-                        window.Add(bioScreen);
-
-                        bioScreen.ConfirmButton.Clicked += () =>
-                        {
-                            BioDataEntitie newBioData = new BioDataEntitie
-                            {
-                                Weight = double.Parse(bioScreen.WeightTextField.Text.ToString()),
-                                Height = double.Parse(bioScreen.HeightTextField.Text.ToString()),
-                                NeckSize = double.Parse(bioScreen.NeckSizeeTextField.Text.ToString()),
-                                WaistSize = double.Parse(bioScreen.WaistSizeTextField.Text.ToString()),
-                                HipsSize = double.Parse(bioScreen.HipsSizeTextField.Text.ToString()),
-                            };
-
-                            loggedInUser.BioData = newBioData;
-                            userService.UpdateBioData(loggedInUser);
-                        };
-
-                        Application.Run(window);
-                    }
-                    else
-                    {
-                        // Clear text fields
-                        loginScreen.UsernameField.Text = "";
-                        loginScreen.PasswordField.Text = "";
-
-                        // Set cursor back to username TextField
-                        loginScreen.SetFocus(loginScreen.UsernameField);
-
-                        // Error dialog 
-                        var d = new Dialog("Error",
-                                    50,
-                                    10,
-                                    new Button("Ok", is_default: true)
-                                    {
-                                        Clicked = () =>
-                                        {
-                                            Application.RequestStop();
-                                        }
-                                    });
-
-                        var errorText = new Label(1, 2, "Wrong user or password!")
-                        {
-                            TextAlignment = TextAlignment.Centered,
-                            TextColor = (int)Color.BrightGreen
-                        };
-                        d.Add(errorText);
-
-                        errorText = new Label(1, 3, "Try to login again..");
-                        d.Add(errorText);
-
-                        Application.Run(d);
-
-                        //MainLoop.Invoke(() => )
-                    }
-                };
-
                 var tframe = top.Frame;
                 var loginTop = new Toplevel(tframe);
                 var win = new Window("Login View")
@@ -115,12 +56,119 @@ namespace App.Core
 
                 loginTop.Add(win);
 
-                var quitLoginViewButtton = new Button("Go back");
+                var quitLoginViewButtton = new Button(50, 0, "Go back");
                 quitLoginViewButtton.Clicked += () => { loginTop.Running = false; };
 
                 win.Add(loginScreen);
                 win.Add(quitLoginViewButtton);
                 Application.Run(loginTop);
+            };
+
+            loginScreen.LoginButton.Clicked += () =>
+            {
+                // Try to get existing user
+                loggedInUser = userService.Login(loginScreen.UsernameField.Text.ToString(), loginScreen.PasswordField.Text.ToString());
+
+                // Successfull login
+                if (loggedInUser != null)
+                {
+                    window.Remove(loginScreen);
+
+                    bioScreen.Add(new Label(10, 5, "Welcome " + loggedInUser.Username));
+                    window.Add(bioScreen);
+
+                    bioScreen.ConfirmButton.Clicked += () =>
+                    {
+                        BioDataEntitie newBioData = new BioDataEntitie
+                        {
+                            Age = int.Parse(bioScreen.AgeTextField.Text.ToString()),
+                            Weight = double.Parse(bioScreen.WeightTextField.Text.ToString()),
+                            Height = double.Parse(bioScreen.HeightTextField.Text.ToString()),
+                            NeckSize = double.Parse(bioScreen.NeckSizeeTextField.Text.ToString()),
+                            WaistSize = double.Parse(bioScreen.WaistSizeTextField.Text.ToString()),
+                            HipsSize = double.Parse(bioScreen.HipsSizeTextField.Text.ToString()),
+                            Gender = int.Parse(bioScreen.GenderRadioGroup.Selected.ToString())
+                        };
+
+                        loggedInUser.BioData = newBioData;
+                        userService.UpdateBioData(loggedInUser);
+
+                        window.Remove(bioScreen);
+                        window.Add(chooseGoalView);
+                        Application.Run(window);
+                    };
+
+                    //window.Add(chooseGoalView);
+
+                    //TODO
+                    //Set transformation goal
+                    var goalChoice = chooseGoalView.RadioGroup.Selected;
+                    chooseGoalView.SelectButton.Clicked += () =>
+                    {
+                        //mapper BiodataEntitie to Biodata
+                        BioData userBioData = new BioData(loggedInUser.BioData.Age, (GenderType)loggedInUser.BioData.Gender,
+                            loggedInUser.BioData.Weight, loggedInUser.BioData.Height, loggedInUser.BioData.NeckSize,
+                            loggedInUser.BioData.WaistSize, loggedInUser.BioData.HipsSize);
+
+                        //mapper UserEntitie to User
+                        User user = new User(loggedInUser.Username, userBioData);
+
+                        var currentFatPerc = bodyCalculator.CalculateBodyFat(user);
+                        var caloriesNeed = bodyCalculator.CalculateCalories(user);
+
+                        //Bulk
+                        if (goalChoice == 0)
+                        {
+                            var goal = new Bulk(user.BioData.Weight, currentFatPerc, caloriesNeed);
+                            finalAdvise = goal.ToString();
+
+
+                            window.Add(new Label(5, 5, finalAdvise));
+                            Application.Run(window);
+                        }
+                    };
+
+                    //window.Add(new Label(5,5, finalAdvise));
+                
+
+                    Application.Run(window);
+                }
+                // Login failed
+                else
+                {
+                    // Clear text fields
+                    loginScreen.UsernameField.Text = "";
+                    loginScreen.PasswordField.Text = "";
+
+                    // Set cursor back to username TextField
+                    loginScreen.SetFocus(loginScreen.UsernameField);
+
+                    // Error dialog 
+                    var d = new Dialog("Error",
+                                50,
+                                10,
+                                new Button("Ok", is_default: true)
+                                {
+                                    Clicked = () =>
+                                    {
+                                        Application.RequestStop();
+                                    }
+                                });
+
+                    var errorText = new Label(1, 2, "Wrong user or password!")
+                    {
+                        TextAlignment = TextAlignment.Centered,
+                        TextColor = (int)Color.BrightGreen
+                    };
+                    d.Add(errorText);
+
+                    errorText = new Label(1, 3, "Try to login again..");
+                    d.Add(errorText);
+
+                    Application.Run(d);
+
+                    //MainLoop.Invoke(() => )
+                }
             };
 
             startScreen.RegisterOptionButton.Clicked += () =>
@@ -143,12 +191,15 @@ namespace App.Core
                     };
 
                     userService.Register(newUser);
-                    window.Remove(registerScreen);
-                    // window.Add(loginScreen);
 
+                    window.Remove(registerScreen);
+                    startScreen.Remove(startScreen.RegisterOptionButton);
+                    //startScreen.Remove(startScreen.LoginOptionButton);
 
                     //TODO what after register?
-                    window.Add(new TextField(10, 5, 99, "Successfully registered user with username:  " + registerScreen.UsernameField.Text.ToString()));
+                    window.Add(new Label(10, 5, "Successfully registered user with username:  " + registerScreen.UsernameField.Text.ToString()));
+                    //window.Add(new TextField(10, 15, 99, "Click to continue!"));
+
                     Application.Run();
                 };
 
@@ -163,7 +214,7 @@ namespace App.Core
                 };
 
                 regTop.Add(win);
-                var quitLoginViewButtton = new Button("Go back");
+                var quitLoginViewButtton = new Button(50, 0, "Go back");
                 quitLoginViewButtton.Clicked += () => { regTop.Running = false; };
 
                 win.Add(registerScreen);
@@ -215,5 +266,13 @@ namespace App.Core
                 Application.Run();
             };
         }
+
+        /*    BioData bioData = new BioData(23, GenderType.Male, 93, 190, 42, 86, 90);
+              User ivan = new User("Ivan", bioData);
+              BodyCalculator bodyCalculator = new BodyCalculator();
+              ivan.Goal = new Bulk(ivan.BioData.Weight, bodyCalculator.CalculateBodyFat(ivan), bodyCalculator.CalculateCalories(ivan));
+              Supplement amix = new Supplement("Amix", "Fusion", Category.Protein, 70, "...");
+              ivan.Goal.AddSupplement(amix);
+              Console.WriteLine(ivan.Goal.ToString());*/
     }
 }

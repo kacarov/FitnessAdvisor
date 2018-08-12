@@ -1,6 +1,6 @@
 ﻿namespace App.Models.Enums
 {
-    public enum Category
+    public enum SupplementCategoryType
     {
         Protein,
         Creatine,

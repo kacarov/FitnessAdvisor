@@ -13,19 +13,19 @@ namespace App.Models.TransformationStrategies
         private double maxWeightTarget;
         private double minFatPercentTarget;
         private double maxFatPercentTarget;
-        private TrainingType trainingType;
-        private List<Supplement> supplements;
+        private ITrainingType trainingType;
+        private IList<ISupplement> supplements;
         private IMealPlan mealPlan;
 
-        public BodyTransformationGoalAbstract(int caloricNeeds, double minWeightTarget, double maxWeightTarget, double minFatPrecentTarget, double maxFatPercentTarget)
+        protected BodyTransformationGoalAbstract(int caloricNeeds, double minWeightTarget, double maxWeightTarget, double minFatPrecentTarget, double maxFatPercentTarget)
         {
             this.MinWeightTarget = minWeightTarget;
             this.MaxWeightTarget = maxWeightTarget;
             this.MinFatPercentTarget = minFatPrecentTarget;
             this.MaxFatPercentTarget = maxFatPercentTarget;
-            StartDate = DateTime.Now;
-            EndDate = StartDate.AddDays(30);
-            supplements = new List<Supplement>();
+            this.StartDate = DateTime.Now;
+            this.EndDate = StartDate.AddDays(30);
+            this.supplements = new List<ISupplement>();
         }
 
         public DateTime StartDate { get; set; }
@@ -37,7 +37,7 @@ namespace App.Models.TransformationStrategies
             {
                 return this.minWeightTarget;
             }
-            set
+            protected set
             {
                 if (value < 0)
                 {
@@ -46,28 +46,30 @@ namespace App.Models.TransformationStrategies
                 minWeightTarget = value;
             }
         }
+
         public double MaxWeightTarget
         {
             get
             {
                 return this.maxWeightTarget;
             }
-            set
+            protected set
             {
                 if (value < 0)
                 {
-                    throw new ArgumentException("Maimal weight cannot be negative.");
+                    throw new ArgumentException("Maximal weight cannot be negative.");
                 }
                 maxWeightTarget = value;
             }
         }
+
         public double MinFatPercentTarget
         {
             get
             {
                 return this.minFatPercentTarget;
             }
-            set
+            protected set
             {
                 if (value < 0)
                 {
@@ -76,13 +78,14 @@ namespace App.Models.TransformationStrategies
                 this.minFatPercentTarget = value;
             }
         }
+
         public double MaxFatPercentTarget
         {
             get
             {
                 return this.maxFatPercentTarget;
             }
-            set
+            protected set
             {
                 if (value < 0)
                 {
@@ -91,7 +94,8 @@ namespace App.Models.TransformationStrategies
                 maxFatPercentTarget = value;
             }
         }
-        public TrainingType TrainingType
+
+        public ITrainingType TrainingType
         {
             get
             {
@@ -102,13 +106,15 @@ namespace App.Models.TransformationStrategies
                 this.trainingType = value ?? throw new ArgumentNullException("Training type cannot be null");
             }
         }
-        public List<Supplement> Supplements
+
+        public IList<ISupplement> Supplements
         {
             get
             {
-                return new List<Supplement>(supplements);
+                return new List<ISupplement>(supplements);
             }
         }
+
         public IMealPlan MealPlan
         {
             get
@@ -120,7 +126,8 @@ namespace App.Models.TransformationStrategies
                 this.mealPlan = value ?? throw new ArgumentNullException("Meal plan cannot be null.");
             }
         }
-        public void AddSupplement(Supplement supplement)
+
+        public void AddSupplement(ISupplement supplement)
         {
             if (supplement == null)
             {
@@ -132,21 +139,25 @@ namespace App.Models.TransformationStrategies
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
+
             builder.AppendLine("Personal program:");
-            builder.AppendLine("Program start date: " + StartDate);
-            builder.AppendLine("Program end date: " + EndDate + "\n");
-            builder.AppendLine("Weight range: " + MinWeightTarget + " - " + MaxWeightTarget);
-            builder.AppendLine("Body fat range: " + MinFatPercentTarget + " - " + MaxFatPercentTarget + "\n");
-            builder.AppendLine(mealPlan.ToString());
-            if (supplements.Count > 0)
+            builder.AppendLine("Program start date: " + this.StartDate);
+            builder.AppendLine("Program end date: " + this.EndDate + "\n");
+            builder.AppendLine("Weight range: " + this.MinWeightTarget + " - " + this.MaxWeightTarget);
+            builder.AppendLine("Body fat range: " + this.MinFatPercentTarget + " - " + this.MaxFatPercentTarget + "\n");
+            builder.AppendLine(this.MealPlan.ToString());
+
+            if (this.supplements.Count > 0)
             {
                 builder.AppendLine("Supplements:");
-                foreach (Supplement supplement in supplements)
+                foreach (ISupplement supplement in this.supplements)
                 {
                     builder.AppendLine(supplement.ToString());
                 }
             }
-            builder.AppendLine(trainingType.ToString());
+
+            builder.AppendLine(this.TrainingType.ToString());
+
             return builder.ToString();
         }
     }

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using App.Models.Contracts;
+using System;
 using System.Text;
 //LOOK FOR VALIDATIONS
 namespace App.Models.Training
 {
-    public class TrainingType
+    public class TrainingType : ITrainingType
     {
         private string description;
         private string weightLiftTip;
@@ -11,9 +12,9 @@ namespace App.Models.Training
 
         public TrainingType(string description, string weightLiftTip, string cardioTip)
         {
-            Description = description;
-            WeightLiftTip = weightLiftTip;
-            CardioTip = cardioTip;
+            this.Description = description;
+            this.WeightLiftTip = weightLiftTip;
+            this.CardioTip = cardioTip;
         }
 
         public string Description
@@ -27,6 +28,7 @@ namespace App.Models.Training
                 this.description = value ?? throw new ArgumentNullException("Description cannot be null");
             }
         }
+
         public string WeightLiftTip
         {
             get
@@ -38,6 +40,7 @@ namespace App.Models.Training
                 this.weightLiftTip = value ?? throw new ArgumentNullException("Weight lifting tip cannot be null");
             }
         }
+
         public string CardioTip
         {
             get
@@ -53,9 +56,11 @@ namespace App.Models.Training
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
+
             builder.AppendLine(Description + ":");
-            builder.AppendLine("Weight lift Tip:\n" + WeightLiftTip);
-            builder.AppendLine("Cardio tip:\n" + CardioTip);
+            builder.AppendLine("Weight lift Tip:\n" + this.WeightLiftTip);
+            builder.AppendLine("Cardio tip:\n" + this.CardioTip);
+
             return builder.ToString();
         }
     }

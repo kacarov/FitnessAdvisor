@@ -4,9 +4,10 @@ using App.Models.TransformationStrategies;
 
 namespace App.Models.GeneralPurpose
 {
-    public class Cutting: BodyTransformationGoalAbstract
+    public class Cutting : BodyTransformationGoalAbstract
     {
-        public Cutting(double currentWeight, double currentFatPercent, int caloricNeeds) : base(caloricNeeds - 1000, currentWeight - 5, currentWeight - 3, currentFatPercent -3, currentFatPercent)
+        public Cutting(double currentWeight, double currentFatPercent, int caloricNeeds)
+            : base(caloricNeeds - 1000, currentWeight - 5, currentWeight - 3, currentFatPercent - 3, currentFatPercent)
         {
 
             string weightLiftTip = "You must be lifting otherwise you will certainly lose muscle, that is a given. Lifting\n" +

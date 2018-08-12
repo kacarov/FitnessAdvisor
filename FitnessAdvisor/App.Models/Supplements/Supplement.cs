@@ -1,24 +1,27 @@
-﻿using App.Models.Enums;
+﻿using App.Models.Contracts;
+using App.Models.Enums;
 using System;
 using System.Text;
-//LOOK FOR VALIDATIONS
+
 namespace App.Models.Supplements
 {
-    public class Supplement
+    public class Supplement : ISupplement
     {
+        //access modif, inheritance?
         private string brand;
         private string name;
         private int servingSize;
         private string description;
 
-        public Supplement(string brand, string name, Category category, int servingSize, string description)
+        public Supplement(string brand, string name, SupplementCategoryType category, int servingSize, string description)
         {
-            Brand = brand;
-            Name = name;
-            Category = category;
-            ServingSize = servingSize;
-            Description = description;
+            this.Brand = brand;
+            this.Name = name;
+            this.Category = category;
+            this.ServingSize = servingSize;
+            this.Description = description;
         }
+
         public string Brand
         {
             get
@@ -30,6 +33,7 @@ namespace App.Models.Supplements
                 this.brand = value ?? throw new ArgumentException("Brand cannot be null");
             }
         }
+
         public string Name
         {
             get
@@ -41,7 +45,9 @@ namespace App.Models.Supplements
                 this.name = value ?? throw new ArgumentException("Name cannot be null");
             }
         }
-        public Category Category { get; set; }
+
+        public SupplementCategoryType Category { get; set; }
+
         public int ServingSize
         {
             get
@@ -57,6 +63,7 @@ namespace App.Models.Supplements
                 this.servingSize = value;
             }
         }
+
         public string Description
         {
             get
@@ -72,11 +79,13 @@ namespace App.Models.Supplements
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendLine("Brand: " + Brand);
-            builder.AppendLine("Name: " + Name);
-            builder.AppendLine("Category: " + Category);
-            builder.AppendLine("Serving size: " + ServingSize);
-            builder.AppendLine("Description: " + Description);
+
+            builder.AppendLine("Brand: " + this.Brand);
+            builder.AppendLine("Name: " + this.Name);
+            builder.AppendLine("Category: " + this.Category);
+            builder.AppendLine("Serving size: " + this.ServingSize);
+            builder.AppendLine("Description: " + this.Description);
+
             return builder.ToString();
         }
     }

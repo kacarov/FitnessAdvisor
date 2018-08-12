@@ -3,20 +3,21 @@ using System;
 
 namespace App.Models.UserInfo
 {
-    public class User
+    public class User : IUser
     {
         private string username;
         /* /// <summary>
          /// What information do we need ? password? email?
          /// </summary>
          /// */
-       
-        private BioData bioData;
+
+        private IBioData bioData;
         private IBodyTransformationGoal goal;
-        public User(string username, BioData bioData)
+
+        public User(string username, IBioData bioData)
         {
-            Username = username;
-            BioData = bioData;
+            this.Username = username;
+            this.BioData = bioData;
         }
 
         public string Username
@@ -30,7 +31,8 @@ namespace App.Models.UserInfo
                 this.username = value ?? throw new ArgumentNullException("Argument cannot be null");
             }
         }
-        public BioData BioData
+
+        public IBioData BioData
         {
             get
             {
@@ -41,16 +43,23 @@ namespace App.Models.UserInfo
                 this.bioData = value ?? throw new ArgumentNullException("Bio data cannot be null");
             }
         }
+
         public IBodyTransformationGoal Goal
         {
             get
             {
                 return this.goal;
             }
-            set
+            private set
             {
                 goal = value ?? throw new ArgumentException("Goal cannot be null.");
             }
+        }
+
+        //review this
+        public void SetTransformationGoal(IBodyTransformationGoal goal)
+        {
+            this.Goal = goal;
         }
     }
 }

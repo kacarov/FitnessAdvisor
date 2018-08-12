@@ -7,16 +7,24 @@ namespace App.Models.Contracts
 {
     public interface IBodyTransformationGoal
     {
-        DateTime StartDate { get; set; }
-        DateTime EndDate { get; set; }
-        double MinWeightTarget { get; set; }
-        double MaxWeightTarget { get; set; }
-        double MinFatPercentTarget { get; set; }
-        double MaxFatPercentTarget { get; set; }
-        TrainingType TrainingType { get; }
-        void AddSupplement(Supplement supplement);
-        IMealPlan MealPlan { get; }
-        List<Supplement> Supplements { get; }
+        DateTime StartDate { get; }
 
+        DateTime EndDate { get; }
+
+        double MinWeightTarget { get; }
+
+        double MaxWeightTarget { get; }
+
+        double MinFatPercentTarget { get; }
+
+        double MaxFatPercentTarget { get; }
+
+        ITrainingType TrainingType { get; }
+
+        IMealPlan MealPlan { get; }
+
+        IList<ISupplement> Supplements { get; }
+
+        void AddSupplement(ISupplement supplement);
     }
 }

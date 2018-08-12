@@ -1,11 +1,10 @@
-﻿using App.Models.Enums;
+﻿using App.Models.Contracts;
+using App.Models.Enums;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace App.Models.UserInfo
 {
-    public class BioData
+    public class BioData : IBioData
     {
         // NEED VALIDATIONS, ENCAPSULATION, ACCESS MODIFIERS !!!!
         private int age;
@@ -16,8 +15,7 @@ namespace App.Models.UserInfo
         private double waistSize;
         private double hipsSize;
         private double bodyFatPercentage;
-        
-        
+
         public BioData(int age, GenderType gender, double weight, double height, double neckSize, double waistSize, double hipsSize)
         {
             this.Age = age;
@@ -103,7 +101,7 @@ namespace App.Models.UserInfo
         }
         public double HipsSize
         {
-               get
+            get
             {
                 return this.hipsSize;
             }
@@ -111,7 +109,7 @@ namespace App.Models.UserInfo
             {
                 this.hipsSize = value;
             }
-        
+
         }
         public double BodyFatPercentage
         {
