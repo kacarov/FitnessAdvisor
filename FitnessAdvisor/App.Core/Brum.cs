@@ -1,5 +1,4 @@
-﻿using App.Core.Log;
-using System;
+﻿using System;
 
 namespace App.Core
 {
