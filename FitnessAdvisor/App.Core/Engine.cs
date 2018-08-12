@@ -27,7 +27,6 @@ namespace App.Core
             this.userService = new UserService(this.db);
             //TODO static or singleton
             this.bodyCalculator = new BodyCalculator();
-
         }
 
         public static IEngine Instance

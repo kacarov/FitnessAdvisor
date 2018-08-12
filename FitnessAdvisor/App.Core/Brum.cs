@@ -15,7 +15,6 @@ namespace App.Core
                 //TODO logger to log errors
 
             }
-
         }
     }
 }
