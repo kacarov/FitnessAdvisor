@@ -15,7 +15,6 @@ namespace App.Core
                 FileLogger logger = new FileLogger();
                 logger.Log(ex.Message);
             }
-
         }
     }
 }
