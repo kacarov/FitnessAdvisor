@@ -6,7 +6,6 @@ namespace App.Models.UserInfo
 {
     public class BioData : IBioData
     {
-        // NEED VALIDATIONS, ENCAPSULATION, ACCESS MODIFIERS !!!!
         private int age;
         private GenderType gender;
         private double weight;
@@ -63,6 +62,10 @@ namespace App.Models.UserInfo
             }
             private set
             {
+                if (value < 30 || value > 300)
+                {
+                    throw new ArgumentException("Weight must be between 30 and 300 kg.");
+                }
                 this.weight = value;
             }
         }
@@ -74,6 +77,10 @@ namespace App.Models.UserInfo
             }
             private set
             {
+                if (value < 100 || value > 300)
+                {
+                    throw new ArgumentException("Height must be in range 100 and 300 cm.");
+                }
                 this.height = value;
             }
         }
@@ -85,6 +92,10 @@ namespace App.Models.UserInfo
             }
             private set
             {
+                if (value < 30 || value > 90)
+                {
+                    throw new ArgumentException("Neck size must be between 30 and 90 cm.");
+                }
                 this.neckSize = value;
             }
         }
@@ -96,6 +107,10 @@ namespace App.Models.UserInfo
             }
             private set
             {
+                if(value < 50 || value > 250)
+                {
+                    throw new ArgumentException("Waist size must be between 50 and 250 cm.");
+                }
                 this.waistSize = value;
             }
         }
@@ -107,6 +122,10 @@ namespace App.Models.UserInfo
             }
             private set
             {
+                if(value < 50 || value > 250)
+                {
+                    throw new ArgumentException("Hip size must be between 50 and 250 cm.");
+                }
                 this.hipsSize = value;
             }
 
