@@ -18,15 +18,11 @@ namespace App.Core
 
         private readonly DbContext db;
         private readonly UserService userService;
-        private readonly BodyCalculator bodyCalculator;
 
-        //add dp inj to ctor db, calc, etc??
         private Engine()
         {
             this.db = new DbContext();
             this.userService = new UserService(this.db);
-            //TODO static or singleton
-            this.bodyCalculator = new BodyCalculator();
         }
 
         public static IEngine Instance
@@ -148,8 +144,8 @@ namespace App.Core
                             //mapper UserEntitie to User
                             User user = new User(loggedInUser.Username, userBioData);
 
-                            var currentFatPerc = bodyCalculator.CalculateBodyFat(user);
-                            var caloriesNeed = bodyCalculator.CalculateCalories(user);
+                            var currentFatPerc = BodyCalculator.CalculateBodyFat(user);
+                            var caloriesNeed = BodyCalculator.CalculateCalories(user);
 
                             // Use factory?
                             IBodyTransformationGoal goal = null;
@@ -223,8 +219,6 @@ namespace App.Core
                     d.Add(errorText);
 
                     Application.Run(d);
-
-                    //MainLoop.Invoke(() => )
                 }
             };
 
@@ -280,7 +274,6 @@ namespace App.Core
 
             };
 
-            // Application.Refresh();
             Application.Run();
         }
     }

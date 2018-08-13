@@ -69,6 +69,7 @@ namespace App.Models.UserInfo
                 this.weight = value;
             }
         }
+
         public double Height
         {
             get
@@ -84,6 +85,7 @@ namespace App.Models.UserInfo
                 this.height = value;
             }
         }
+
         public double NeckSize
         {
             get
@@ -99,6 +101,7 @@ namespace App.Models.UserInfo
                 this.neckSize = value;
             }
         }
+
         public double WaistSize
         {
             get
@@ -114,6 +117,7 @@ namespace App.Models.UserInfo
                 this.waistSize = value;
             }
         }
+
         public double HipsSize
         {
             get
@@ -129,6 +133,7 @@ namespace App.Models.UserInfo
                 this.hipsSize = value;
             }
         }
+
         public double BodyFatPercentage
         {
             get
