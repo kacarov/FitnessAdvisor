@@ -61,10 +61,10 @@ namespace App.Models.Training
             builder.AppendLine(this.Description + ":");
             builder.AppendLine("--------------------------------");
             builder.AppendLine("\nWeight lift Tip:");
-            builder.AppendLine("--------------------------------\n");
+            builder.AppendLine("--------------------------------");
             builder.AppendLine(this.WeightLiftTip);
             builder.AppendLine("\nCardio tip:");
-            builder.AppendLine("--------------------------------\n");
+            builder.AppendLine("--------------------------------");
             builder.AppendLine(this.CardioTip);
 
             return builder.ToString();

@@ -1,18 +1,12 @@
-﻿using App.Models.Contracts;
-using App.Models.Enums;
+﻿using App.Models.Enums;
 using App.Models.UserInfo;
 using System;
-// CHECK THE VALIDATIONS
+
 namespace App.Models.Calculators
 {
-    public class BodyCalculator : ICalculatable
+    public static class BodyCalculator
     {
-        //TODO static or singleton 
-        public BodyCalculator()
-        {
-        }
-
-        public double CalculateBodyFat(User user)
+        public static double CalculateBodyFat(User user)
         {
             if (user == null)
             {
@@ -37,7 +31,7 @@ namespace App.Models.Calculators
             return bodyFatPercentage;
         }
 
-        public int CalculateCalories(User user)
+        public static int CalculateCalories(User user)
         {
             if (user == null)
             {
