@@ -15,6 +15,7 @@ namespace App.Models.TransformationStrategies
         private IList<ISupplement> supplements;
         private IMealPlan mealPlan;
 
+        //Holds information about user's weight and bodyfat range, training type, supplements list and meal plan.
         protected BodyTransformationGoalAbstract(double minWeightTarget, double maxWeightTarget, double minFatPrecentTarget, double maxFatPercentTarget)
         {
             this.MinWeightTarget = minWeightTarget;
@@ -125,6 +126,7 @@ namespace App.Models.TransformationStrategies
             }
         }
 
+        //Adds supplement to user's supplement list.
         public void AddSupplement(ISupplement supplement)
         {
             if (supplement == null)

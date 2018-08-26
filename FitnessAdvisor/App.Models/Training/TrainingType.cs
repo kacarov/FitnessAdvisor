@@ -10,6 +10,7 @@ namespace App.Models.Training
         private string weightLiftTip;
         private string cardioTip;
 
+        //Holds information about user's training based on his goals.
         public TrainingType(string description, string weightLiftTip, string cardioTip)
         {
             this.Description = description;

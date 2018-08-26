@@ -4,9 +4,11 @@ using App.Models.TransformationStrategies;
 
 namespace App.Models.GeneralPurpose
 {
+    //Sets user's goal, training type and meal plan.
     public class Bulk : BodyTransformationGoalAbstract
-    {
-        private const string weightLiftTip = "Most people have the mentality that more is better. This is not the case with training.\n" +
+    {    
+
+        /*private const string weightLiftTip = "Most people have the mentality that more is better. This is not the case with training.\n" +
                                    "Most of the time the people who have that mindset are overtraining and in turn minimizing their gains.\n" +
                                    "Depending on your exercise level, you could train smartly with 3-6 days in the gym.\n\n" +
                                    "You want to keep your workouts short but intense.This means that you should ideally\n" +
@@ -32,12 +34,15 @@ namespace App.Models.GeneralPurpose
                                 "make up for the loss you experienced during your workout.You can get away with doing\n" +
                                 "some low - intensity cardio without losing lean mass gains, so do not be afraid to do\n" +
                                 "cardio while bulking.";
-
+                                */
 
         public Bulk(double currentWeight, double currentFatPercent, int caloricNeeds)
             : base(currentWeight + 3, currentWeight + 5, currentFatPercent, currentFatPercent + 2)
         {
-            base.TrainingType = new TrainingType("Training tips while bulking", weightLiftTip, cardioLiftTip);
+            base.TrainingType = new TrainingType("Training tips while bulking",
+                TrainingStrategyConstants.BulkWeightLiftTip,
+                TrainingStrategyConstants.BulkCardioLiftTip);
+
             base.MealPlan = new BulkingMealPlan(caloricNeeds + 1000);
         }
     }

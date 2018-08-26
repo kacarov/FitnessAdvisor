@@ -4,9 +4,10 @@ using App.Models.TransformationStrategies;
 
 namespace App.Models.GeneralPurpose
 {
+    //Sets user's goal, training type and meal plan.
     public class Cutting : BodyTransformationGoalAbstract
     {
-        private const string weightLiftTip = "You must be lifting otherwise you will certainly lose muscle, that is a given. Lifting\n" +
+        /*private const string weightLiftTip = "You must be lifting otherwise you will certainly lose muscle, that is a given. Lifting\n" +
                                  "will send signals to your body instructing it to build muscle. Although you won't be\n" +
                                  "building any muscle on low calories, this makes your body less likely for it to breakdown\n" +
                                  "muscle tissue that you already have. Lifting ensures that your body realizes that the muscle\n" +
@@ -31,11 +32,14 @@ namespace App.Models.GeneralPurpose
                                "We have found the best results when treating cardio session like a lifting session. You will do it on days\n" +
                                "when you are not lifting(or 6 + hours away from a lifting session).You will make sure to eat enough calories\n" +
                                "both before and after cardio.";
+                               */
 
         public Cutting(double currentWeight, double currentFatPercent, int caloricNeeds)
             : base(currentWeight - 5, currentWeight - 3, currentFatPercent - 3, currentFatPercent)
         {
-            base.TrainingType = new TrainingType("Training tips while cutting", weightLiftTip, cardioLiftTip);
+            base.TrainingType = new TrainingType("Training tips while cutting",
+                TrainingStrategyConstants.CuttingWeightLiftTip,
+                TrainingStrategyConstants.CuttingCardioLiftTip);
             base.MealPlan = new CuttingMealPlan(caloricNeeds - 1000);
         }
     }

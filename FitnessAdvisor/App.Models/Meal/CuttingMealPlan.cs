@@ -10,6 +10,7 @@ namespace App.Models.Meal
             this.CalculateMealPlan();
         }
 
+        // Calculates protein, carbs and fats needs that the user need to consume per day.
         protected override void CalculateMealPlan()
         {
             double caloriesFromProtein = (45.0 / 100) * this.CaloricNeeds;

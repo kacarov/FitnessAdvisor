@@ -4,9 +4,10 @@ using App.Models.TransformationStrategies;
 
 namespace App.Models.GeneralPurpose
 {
+    //Sets user's goal, training type and meal plan.
     public class Maintain : BodyTransformationGoalAbstract
     {
-        private const string weightLiftTip = "As far as training goes, much like your eating, it doesn't have to be as regimented or rigorous.\n" +
+       /* private const string weightLiftTip = "As far as training goes, much like your eating, it doesn't have to be as regimented or rigorous.\n" +
                                "The biggest concept that we want to push and for people to understand is that you won't lose muscle\n" +
                                "overnight, especially if you keep training. Training, however, doesn't have to be as intense as it used to be.\n\n" +
                                "If you were used to going to the gym five times a week, hitting every body part with twelve to fifteen sets,\n" +
@@ -25,11 +26,13 @@ namespace App.Models.GeneralPurpose
                                "less, you should be able to improve your conditioning and look much better! Hey, if you no longer want to train to add\n" +
                                "mass, compensate elsewhere and improve a different aspect of your health!";
 
-
+    */
         public Maintain(double currentWeight, double currentFatPercent, int caloricNeeds)
             : base(currentWeight - 0.5, currentWeight + 0.5, currentFatPercent - 0.5, currentFatPercent + 0.5)
         {
-            base.TrainingType = new TrainingType("Training tips while maintaining", weightLiftTip, cardioLiftTip);
+            base.TrainingType = new TrainingType("Training tips while maintaining",
+                TrainingStrategyConstants.MaintainWeightLiftTip,
+                TrainingStrategyConstants.CuttingCardioLiftTip);
             base.MealPlan = new MaintainMealPlan(caloricNeeds);
         }
     }

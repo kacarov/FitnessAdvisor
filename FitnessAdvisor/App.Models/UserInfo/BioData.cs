@@ -4,6 +4,7 @@ using System;
 
 namespace App.Models.UserInfo
 {
+    //Holds user's bio data.
     public class BioData : IBioData
     {
         private int age;

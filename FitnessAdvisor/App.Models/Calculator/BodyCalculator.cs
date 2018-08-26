@@ -4,9 +4,10 @@ using System;
 
 namespace App.Models.Calculators
 {
-    public static class BodyCalculator
+    public class BodyCalculator
     {
-        public static double CalculateBodyFat(User user)
+        // Calculates user body fat
+        public double CalculateBodyFat(User user)
         {
             if (user == null)
             {
@@ -30,7 +31,7 @@ namespace App.Models.Calculators
 
             return bodyFatPercentage;
         }
-
+        //Calculates user calories needs 
         public static int CalculateCalories(User user)
         {
             if (user == null)
