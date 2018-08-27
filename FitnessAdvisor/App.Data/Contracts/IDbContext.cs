@@ -4,6 +4,6 @@ namespace App.Data.Contracts
 {
     public interface IDbContext
     {
-        UserRepository UserRepository { get; }
+        IUserRepository UserRepository { get; }
     }
 }

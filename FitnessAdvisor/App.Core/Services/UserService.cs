@@ -1,5 +1,6 @@
 ﻿using App.Core.Contracts;
 using App.Data.Contracts;
+using System;
 using System.Linq;
 
 namespace App.Core.Services
@@ -25,6 +26,10 @@ namespace App.Core.Services
 
         public void Register(IUserEntitie userToCreate)
         {
+            if (userToCreate == null)
+            {
+                throw new ArgumentNullException("User cannot be null!");
+            }
 
             db.UserRepository.Add(userToCreate);
         }

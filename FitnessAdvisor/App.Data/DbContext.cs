@@ -10,6 +10,6 @@ namespace App.Data
             this.UserRepository = new UserRepository();
         }
 
-        public UserRepository UserRepository { get; set; }
+        public IUserRepository UserRepository { get; set; }
     }
 }
