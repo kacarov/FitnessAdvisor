@@ -1,4 +1,5 @@
 ﻿using App.Core.Contracts;
+using App.Core.Factory;
 using App.Data.Contracts;
 using App.Data.Entities;
 using App.Models.Contracts;
@@ -15,18 +16,20 @@ namespace App.Core.Engine
         private readonly IUserService userService;
         private readonly IBodyCalculator bodyCalculator;
         private readonly IAppViewsContainer appViews;
-
+        private readonly ITransformationGoalFactory transformationGoalFactory;
         private IUserEntitie loggedInUser = null;
 
         public Engine(IDbContext db,
                 IUserService userService,
                 IBodyCalculator bodyCalculator,
-                IAppViewsContainer appViews)
+                IAppViewsContainer appViews,
+                ITransformationGoalFactory transformationGoalFactory)
         {
             this.db = db;
             this.userService = userService;
             this.bodyCalculator = bodyCalculator;
             this.appViews = appViews;
+            this.transformationGoalFactory = transformationGoalFactory;
         }
 
         public void Run()
@@ -120,21 +123,11 @@ namespace App.Core.Engine
                 var currentFatPerc = this.bodyCalculator.CalculateBodyFat(user);
                 var caloriesNeed = this.bodyCalculator.CalculateCalories(user);
 
-                // Use factory?
-                IBodyTransformationGoal goal = null;
 
-                switch (this.appViews.ChooseGoalScreen.RadioGroup.Selected)
-                {
-                    case 0:
-                        goal = new Bulk(user.BioData.Weight, currentFatPerc, caloriesNeed);
-                        break;
-                    case 1:
-                        goal = new Maintain(user.BioData.Weight, currentFatPerc, caloriesNeed);
-                        break;
-                    case 2:
-                        goal = new Cutting(user.BioData.Weight, currentFatPerc, caloriesNeed);
-                        break;
-                }
+                IBodyTransformationGoal goal = transformationGoalFactory.GetGoal(this.appViews.ChooseGoalScreen.RadioGroup.Selected,
+                                                                                 user.BioData.Weight,
+                                                                                 currentFatPerc,
+                                                                                 caloriesNeed);
 
                 window.Remove(this.appViews.ChooseGoalScreen);
                 string finalAdvise = string.Empty;

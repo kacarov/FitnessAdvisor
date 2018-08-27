@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="App.Models.Calculators.BodyCalculator" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Calculator\BodyCalculator.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="App.Models.Meal.BulkingMealPlan" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Meal\BulkingMealPlan.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="App.Models.Meal.CuttingMealPlan" Collapsed="true">
+    <Position X="2.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Meal\CuttingMealPlan.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="App.Models.Meal.MaintainMealPlan" Collapsed="true">
+    <Position X="5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Meal\MaintainMealPlan.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="App.Models.Meal.MealPlan" Collapsed="true">
+    <Position X="2.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAGAAEABgECAAABAwAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Meal\MealPlan.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="App.Models.Supplements.Supplement" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAgAAAEIAAAAAQBAAAEAQAAAAAAAAABCAA=</HashCode>
+      <FileName>Supplements\Supplement.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="App.Models.Training.TrainingType" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAEAABgAAAEIAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Training\TrainingType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="App.Models.TransformationStrategies.BodyTransformationGoalAbstract" Collapsed="true">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABgAEAAIACAAAAAEIAAAGACgAAgIkAAAAIAAAEAAAAA=</HashCode>
+      <FileName>TransformationStrategies\BodyTransformationGoalAbstract.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="App.Models.TransformationStrategies.TrainingStrategyConstants" Collapsed="true">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAFAAAAAAAAAAAAAAAAAIQAgAAIAAAAA=</HashCode>
+      <FileName>TransformationStrategies\TrainingStrategyConstants.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="App.Models.GeneralPurpose.Bulk" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TransformationStrategies\Bulk.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="App.Models.GeneralPurpose.Cutting" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TransformationStrategies\Cutting.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="App.Models.GeneralPurpose.Maintain" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TransformationStrategies\Maintain.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="App.Models.UserInfo.BioData" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAQASAQEGAgEABACAAAgAgQAAAAEAAAAA=</HashCode>
+      <FileName>UserInfo\BioData.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="App.Models.UserInfo.User" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAEEAAAIAAAEAQAAAAEAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>UserInfo\User.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="App.Models.Contracts.IBioData" Collapsed="true">
+    <Position X="7.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAACAAEAAAEABACAAAgAAQAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\IBioData.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="App.Models.Contracts.IBodyCalculator" Collapsed="true">
+    <Position X="9.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\IBodyCalculator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="App.Models.Contracts.IBodyTransformationGoal" Collapsed="true">
+    <Position X="11" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAAGACgAAgIEAAAAIAAAEAAAAA=</HashCode>
+      <FileName>Contracts\IBodyTransformationGoal.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="App.Models.Contracts.IMealPlan" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAABAECAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\IMealPlan.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="App.Models.Contracts.ISupplement" Collapsed="true">
+    <Position X="9.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAQAAAAAAQAAAAAAAAABCAA=</HashCode>
+      <FileName>Contracts\ISupplement.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="App.Models.Contracts.ITrainingType" Collapsed="true">
+    <Position X="11" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAgAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\ITrainingType.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="App.Models.Contracts.IUser" Collapsed="true">
+    <Position X="7.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\IUser.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="App.Models.Enums.GenderType" Collapsed="true">
+    <Position X="7.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Enums\GenderType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="App.Models.Enums.SupplementCategoryType" Collapsed="true">
+    <Position X="9.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAIAAAAAAAAAAAAAAAAIAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\SupplementCategoryType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

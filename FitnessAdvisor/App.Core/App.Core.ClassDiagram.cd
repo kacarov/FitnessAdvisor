@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="App.Core.Engine.AppViewsContainer" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAYAAAAEAAAAAAAAAEgAAABIACAACgAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\AppViewsContainer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="App.Core.Engine.Engine" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABCIAIAAAEYAACAAAAEAAAAASAAQIAACAEAAAAAAAI=</HashCode>
+      <FileName>Engine\Engine.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="App.Core.Factory.TransformationGoalFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Factory\TransformationGoalFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="App.Core.FitnessAdvisorInjection.FitnessAdvisorConfig" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAQAAAAAA=</HashCode>
+      <FileName>FitnessAdvisorInjection\FitnessAdvisorConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="App.Core.FileLogger" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Logger\FileLogger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="App.Core.StartUp" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>StartUp.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="App.Core.Services.UserService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAQABAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Services\UserService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="App.Core.Views.BioDataView" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQEQAAACBAAAAgAACAAAEAAABAAIAQAAQBAAEEACEA=</HashCode>
+      <FileName>Views\BioDataView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="App.Core.Views.ChooseGoalView" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAABCAAAAAAAAAAAAAAAAAAAAAAAQI=</HashCode>
+      <FileName>Views\ChooseGoalView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="App.Core.Views.LoginView" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAABAQAAAAAAAAAAACAABAAAAAAAAQAAAAAAAAAACAA=</HashCode>
+      <FileName>Views\LoginView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="App.Core.Views.RegisterView" Collapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAQCgQAAAAgAAACAABAAAAIAAAQAAAAAAACAAKAA=</HashCode>
+      <FileName>Views\RegisterView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="App.Core.Views.StartView" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgCAAAgAAAAAIAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Views\StartView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="App.Core.Views.SupplementsChoiceView" Collapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQAAAgAAAAAAAAAgCgAAAAAAAAAUAAAAAAAQAAAAQA=</HashCode>
+      <FileName>Views\SupplementsChoiceView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="App.Core.Contracts.IAppViewsContainer" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAAAEgAAAAAAAAACgAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\IAppViewsContainer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="App.Core.Contracts.IEngine" Collapsed="true">
+    <Position X="2.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Contracts\IEngine.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="App.Core.Contracts.IUserService" Collapsed="true">
+    <Position X="5.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAQABAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Contracts\IUserService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="App.Core.Factory.ITransformationGoalFactory" Collapsed="true">
+    <Position X="4" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Factory\ITransformationGoalFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

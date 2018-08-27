@@ -1,5 +1,6 @@
 ﻿using App.Core.Contracts;
 using App.Core.Engine;
+using App.Core.Factory;
 using App.Core.Services;
 using App.Core.Views;
 using App.Data;
@@ -28,6 +29,7 @@ namespace App.Core.FitnessAdvisorInjection
             builder.RegisterType<BodyCalculator>().As<IBodyCalculator>().SingleInstance();
             builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
             builder.RegisterType<AppViewsContainer>().As<IAppViewsContainer>().SingleInstance();
+            builder.RegisterType<TransformationGoalFactory>().As<ITransformationGoalFactory>();
 
 
             builder.RegisterType<StartView>().SingleInstance();
