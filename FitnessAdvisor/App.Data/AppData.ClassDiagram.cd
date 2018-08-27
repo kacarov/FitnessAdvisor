@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="App.Data.Entities.BioDataEntitie" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="1" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAACAAEAAAEABQCAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Entities\BioDataEntitie.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="App.Data.Entities.UserEntitie" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="1" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACAKAAAAAQAAAAgAAAAAAAACAAAAAAAAAAg=</HashCode>
+      <FileName>Entities\UserEntitie.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="App.Data.Repositories.UserRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAgAAAAAAAAAACEAAAAAAAAAAAEAAIA=</HashCode>
+      <FileName>Repositories\UserRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="App.Data.DbContext" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DbContext.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="App.Data.Contracts.IBioDataEntitie" Collapsed="true">
+    <Position X="1" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAACAAEAAAEABQCAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\IBioDataEntitie.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="App.Data.Contracts.IDbContext" Collapsed="true">
+    <Position X="2.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Contracts\IDbContext.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="App.Data.Contracts.IUserEntitie" Collapsed="true">
+    <Position X="1" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACAKAAAAAQAAAAgAAAAAAAACAAAAAAAAAAg=</HashCode>
+      <FileName>Contracts\IUserEntitie.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="App.Data.Contracts.IUserRepository" Collapsed="true">
+    <Position X="2.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAAAAAAAAAAAAAAACEAAAAAAAAAAAEAAIA=</HashCode>
+      <FileName>Contracts\IUserRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
