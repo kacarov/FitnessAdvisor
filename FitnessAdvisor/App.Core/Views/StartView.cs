@@ -1,13 +1,14 @@
-﻿using Terminal.Gui;
+﻿
+using Terminal.Gui;
 
 namespace App.Core.Views
 {
-    public class StartScreen : View
+    public class StartView : View
     {
         private Button loginOptionButton;
         private Button registerOptionButton;
 
-        public StartScreen()
+        public StartView()
         {
             this.InitializeViewElements();
         }

@@ -11,7 +11,6 @@ namespace App.Core
             var containerConfig = new FitnessAdvisorConfig();
             var container = containerConfig.Build();
 
-
             var engine = container.Resolve<IEngine>();
             engine.Run();
 

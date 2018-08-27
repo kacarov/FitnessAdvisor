@@ -1,5 +1,4 @@
 ﻿using App.Core.Contracts;
-using App.Core.Views;
 using App.Data.Contracts;
 using App.Data.Entities;
 using App.Models.Contracts;
@@ -8,50 +7,276 @@ using App.Models.GeneralPurpose;
 using App.Models.UserInfo;
 using Terminal.Gui;
 
-namespace App.Core
+namespace App.Core.Engine
 {
     public class Engine : IEngine
     {
         private readonly IDbContext db;
         private readonly IUserService userService;
         private readonly IBodyCalculator bodyCalculator;
+        private readonly IAppViewsContainer appViews;
 
-        public Engine(IDbContext db, IUserService userService, IBodyCalculator bodyCalculator)
+        private IUserEntitie loggedInUser = null;
+
+        public Engine(IDbContext db,
+                IUserService userService,
+                IBodyCalculator bodyCalculator,
+                IAppViewsContainer appViews)
         {
             this.db = db;
             this.userService = userService;
             this.bodyCalculator = bodyCalculator;
+            this.appViews = appViews;
         }
 
         public void Run()
         {
-
-            IUserEntitie loggedInUser = null;
-
-            //Views
-            LoginView loginScreen = new LoginView();
-            RegisterView registerScreen = new RegisterView();
-            StartScreen startScreen = new StartScreen();
-            BioDataView bioScreen = new BioDataView();
-            ChooseGoalView chooseGoalScreen = new ChooseGoalView();
-
-            string finalAdvise = string.Empty;
-
             Application.Init();
 
-            Toplevel top = Application.Top;
-            Window window = new Window("FitApp")
+            Toplevel top;
+            Window window;
+
+            this.InitializeTopAndWindow(out top, out window);
+
+            //setup startscreen buttons actions
+            this.SetupStartScreenLoginButtonAction(top);
+            this.SetupStartScreenRegisterButtonAction(top);
+
+            this.SetupRegisterScreenButtonAction(window);
+
+            this.SetupLoginScreenLoginButtonAction(window);
+
+            Application.Run();
+        }
+
+        private void InitializeTopAndWindow(out Toplevel top, out Window window)
+        {
+            top = Application.Top;
+            window = new Window("FitApp")
             {
                 X = 0,
                 Y = 1,
                 Width = Dim.Fill(),
                 Height = Dim.Fill()
             };
-
             top.Add(window);
-            top.Add(startScreen);
+            top.Add(this.appViews.StartScreen);
+        }
 
-            startScreen.LoginOptionButton.Clicked += () =>
+        private void SetupLoginScreenLoginButtonAction(Window window)
+        {
+            this.appViews.LoginScreen.LoginButton.Clicked += () =>
+            {
+                // Try to get existing user
+                loggedInUser = userService.Login(this.appViews.LoginScreen.UsernameField.Text.ToString(), this.appViews.LoginScreen.PasswordField.Text.ToString());
+
+                // Successfull login
+                if (loggedInUser != null)
+                {
+                    this.HandleSuccessfulLogin(window);
+                }
+                // Login failed
+                else
+                {
+                    this.SetupFailedLoginDialogPopUp();
+                }
+            };
+        }
+
+        private void HandleSuccessfulLogin(Window window)
+        {
+            window.Remove(this.appViews.LoginScreen);
+
+            //check if user already got training program advise
+            if (!string.IsNullOrEmpty(loggedInUser.TrainingProgramAdvise))
+            {
+                window.Add(new TextView { Text = loggedInUser.TrainingProgramAdvise });
+
+                Application.Run(window);
+            }
+            else
+            {
+                this.SetupBioScreenView(loggedInUser, window);
+
+                //Set transformation goal     
+                this.SetupTransformationGoalScreenButtonActions(window);
+            };
+
+            Application.Run(window);
+        }
+
+        private void SetupTransformationGoalScreenButtonActions(Window window)
+        {
+            this.appViews.ChooseGoalScreen.SelectButton.Clicked += () =>
+            {
+                //mapper BiodataEntitie to Biodata
+                BioData userBioData = new BioData(loggedInUser.BioData.Age, (GenderType)loggedInUser.BioData.Gender,
+                    loggedInUser.BioData.Weight, loggedInUser.BioData.Height, loggedInUser.BioData.NeckSize,
+                    loggedInUser.BioData.WaistSize, loggedInUser.BioData.HipsSize);
+
+                //mapper UserEntitie to User
+                User user = new User(loggedInUser.Username, userBioData);
+
+                var currentFatPerc = this.bodyCalculator.CalculateBodyFat(user);
+                var caloriesNeed = this.bodyCalculator.CalculateCalories(user);
+
+                // Use factory?
+                IBodyTransformationGoal goal = null;
+
+                switch (this.appViews.ChooseGoalScreen.RadioGroup.Selected)
+                {
+                    case 0:
+                        goal = new Bulk(user.BioData.Weight, currentFatPerc, caloriesNeed);
+                        break;
+                    case 1:
+                        goal = new Maintain(user.BioData.Weight, currentFatPerc, caloriesNeed);
+                        break;
+                    case 2:
+                        goal = new Cutting(user.BioData.Weight, currentFatPerc, caloriesNeed);
+                        break;
+                }
+
+                window.Remove(this.appViews.ChooseGoalScreen);
+                string finalAdvise = string.Empty;
+
+                if (goal != null)
+                {
+                    user.SetTransformationGoal(goal);
+                    finalAdvise = user.Goal.ToString();
+
+                    //Update user goal at db
+                    loggedInUser.TrainingProgramAdvise = finalAdvise;
+                    userService.UpdateUser(loggedInUser);
+
+                    window.Add(new TextView { Text = finalAdvise });
+                }
+
+                Application.Run(window);
+            };
+        }
+
+        private void SetupFailedLoginDialogPopUp()
+        {
+            // Clear text fields
+            this.appViews.LoginScreen.UsernameField.Text = "";
+            this.appViews.LoginScreen.PasswordField.Text = "";
+
+            // Set cursor back to username TextField
+            this.appViews.LoginScreen.SetFocus(this.appViews.LoginScreen.UsernameField);
+
+            // Error dialog 
+            var d = new Dialog("Error",
+                        50,
+                        10,
+                        new Button("Ok", is_default: true)
+                        {
+                            Clicked = () =>
+                            {
+                                Application.RequestStop();
+                            }
+                        });
+
+            var errorText = new Label(1, 2, "Wrong user or password!")
+            {
+                TextAlignment = TextAlignment.Centered,
+                TextColor = (int)Color.BrightGreen
+            };
+            d.Add(errorText);
+
+            errorText = new Label(1, 3, "Try to login again..");
+            d.Add(errorText);
+
+            Application.Run(d);
+        }
+
+        private void SetupStartScreenRegisterButtonAction(Toplevel top)
+        {
+            this.appViews.StartScreen.RegisterOptionButton.Clicked += () =>
+            {
+                //top.Remove(startScreen);
+
+                // registerScreen = new RegisterView();
+                //RegisterAction(userService, window, registerScreen,loginScreen);
+
+                var regTop = new Toplevel(top.Frame);
+                var win = new Window("Register View")
+                {
+                    X = 0,
+                    Y = 1,
+                    Width = Dim.Fill(),
+                    Height = Dim.Fill()
+                };
+
+                regTop.Add(win);
+                var quitLoginViewButtton = new Button(50, 0, "Go back");
+                quitLoginViewButtton.Clicked += () => { regTop.Running = false; };
+
+                win.Add(this.appViews.RegisterScreen);
+
+                win.Add(quitLoginViewButtton);
+
+                Application.Run(regTop);
+            };
+        }
+
+        private void SetupBioScreenView(IUserEntitie loggedInUser, Window window)
+        {
+            this.appViews.BioScreen.Add(new Label(10, 3, "Welcome " + loggedInUser.Username) { TextAlignment = TextAlignment.Centered });
+            window.Add(this.appViews.BioScreen);
+
+            this.appViews.BioScreen.ConfirmButton.Clicked += () =>
+            {
+                BioDataEntitie newBioData = new BioDataEntitie
+                {
+                    Age = int.Parse(this.appViews.BioScreen.AgeTextField.Text.ToString()),
+                    Weight = double.Parse(this.appViews.BioScreen.WeightTextField.Text.ToString()),
+                    Height = double.Parse(this.appViews.BioScreen.HeightTextField.Text.ToString()),
+                    NeckSize = double.Parse(this.appViews.BioScreen.NeckSizeeTextField.Text.ToString()),
+                    WaistSize = double.Parse(this.appViews.BioScreen.WaistSizeTextField.Text.ToString()),
+                    HipsSize = double.Parse(this.appViews.BioScreen.HipsSizeTextField.Text.ToString()),
+                    Gender = int.Parse(this.appViews.BioScreen.GenderRadioGroup.Selected.ToString())
+                };
+
+                loggedInUser.BioData = newBioData;
+                userService.UpdateUser(loggedInUser);
+
+                window.Remove(this.appViews.BioScreen);
+                window.Add(this.appViews.ChooseGoalScreen);
+                this.appViews.ChooseGoalScreen.SetFocus(this.appViews.ChooseGoalScreen.RadioGroup);
+
+                Application.Run(window);
+            };
+        }
+
+        private void SetupRegisterScreenButtonAction(Window window)
+        {
+            this.appViews.RegisterScreen.RegisterButton.Clicked += () =>
+            {
+                var newUser = new UserEntitie
+                {
+                    Username = this.appViews.RegisterScreen.UsernameField.Text.ToString(),
+                    Password = this.appViews.RegisterScreen.PasswordField.Text.ToString(),
+                    FirstName = this.appViews.RegisterScreen.FirstNameField.Text.ToString(),
+                    LastName = this.appViews.RegisterScreen.LastNameField.Text.ToString(),
+                    Email = this.appViews.RegisterScreen.EmailField.Text.ToString(),
+                    BioData = null
+                };
+
+                userService.Register(newUser);
+
+                window.Remove(this.appViews.RegisterScreen);
+                this.appViews.StartScreen.Remove(this.appViews.StartScreen.RegisterOptionButton);
+                //startScreen.Remove(startScreen.LoginOptionButton);
+
+                //window.Add(new Label(10, 5, "Successfully registered user with username:  " + registerScreen.UsernameField.Text.ToString()));
+
+                Application.Run();
+            };
+        }
+
+        private void SetupStartScreenLoginButtonAction(Toplevel top)
+        {
+            this.appViews.StartScreen.LoginOptionButton.Clicked += () =>
             {
                 var tframe = top.Frame;
                 var loginTop = new Toplevel(tframe);
@@ -68,198 +293,10 @@ namespace App.Core
                 var quitLoginViewButtton = new Button(50, 0, "Go back");
                 quitLoginViewButtton.Clicked += () => { loginTop.Running = false; };
 
-                win.Add(loginScreen);
+                win.Add(this.appViews.LoginScreen);
                 win.Add(quitLoginViewButtton);
                 Application.Run(loginTop);
             };
-
-            loginScreen.LoginButton.Clicked += () =>
-            {
-                // Try to get existing user
-                loggedInUser = userService.Login(loginScreen.UsernameField.Text.ToString(), loginScreen.PasswordField.Text.ToString());
-
-                // Successfull login
-                if (loggedInUser != null)
-                {
-                    window.Remove(loginScreen);
-
-                    //chek if user already got training program advise
-                    if (!string.IsNullOrEmpty(loggedInUser.TrainingProgramAdvise))
-                    {
-                        window.Add(new TextView { Text = loggedInUser.TrainingProgramAdvise });
-
-                        Application.Run(window);
-                    }
-                    else
-                    {
-                        bioScreen.Add(new Label(10, 3, "Welcome " + loggedInUser.Username) { TextAlignment = TextAlignment.Centered });
-                        window.Add(bioScreen);
-
-                        bioScreen.ConfirmButton.Clicked += () =>
-                        {
-                            BioDataEntitie newBioData = new BioDataEntitie
-                            {
-                                Age = int.Parse(bioScreen.AgeTextField.Text.ToString()),
-                                Weight = double.Parse(bioScreen.WeightTextField.Text.ToString()),
-                                Height = double.Parse(bioScreen.HeightTextField.Text.ToString()),
-                                NeckSize = double.Parse(bioScreen.NeckSizeeTextField.Text.ToString()),
-                                WaistSize = double.Parse(bioScreen.WaistSizeTextField.Text.ToString()),
-                                HipsSize = double.Parse(bioScreen.HipsSizeTextField.Text.ToString()),
-                                Gender = int.Parse(bioScreen.GenderRadioGroup.Selected.ToString())
-                            };
-
-                            loggedInUser.BioData = newBioData;
-                            userService.UpdateUser(loggedInUser);
-
-                            window.Remove(bioScreen);
-                            window.Add(chooseGoalScreen);
-                            chooseGoalScreen.SetFocus(chooseGoalScreen.RadioGroup);
-
-                            Application.Run(window);
-                        };
-
-                        //Set transformation goal     
-                        chooseGoalScreen.SelectButton.Clicked += () =>
-                        {
-                            //mapper BiodataEntitie to Biodata
-                            BioData userBioData = new BioData(loggedInUser.BioData.Age, (GenderType)loggedInUser.BioData.Gender,
-                                loggedInUser.BioData.Weight, loggedInUser.BioData.Height, loggedInUser.BioData.NeckSize,
-                                loggedInUser.BioData.WaistSize, loggedInUser.BioData.HipsSize);
-
-                            //mapper UserEntitie to User
-                            User user = new User(loggedInUser.Username, userBioData);
-
-                            var currentFatPerc = this.bodyCalculator.CalculateBodyFat(user);
-                            var caloriesNeed = this.bodyCalculator.CalculateCalories(user);
-
-                            // Use factory?
-                            IBodyTransformationGoal goal = null;
-
-                            switch (chooseGoalScreen.RadioGroup.Selected)
-                            {
-                                case 0:
-                                    goal = new Bulk(user.BioData.Weight, currentFatPerc, caloriesNeed);
-
-                                    break;
-                                case 1:
-                                    goal = new Maintain(user.BioData.Weight, currentFatPerc, caloriesNeed);
-
-                                    break;
-                                case 2:
-                                    goal = new Cutting(user.BioData.Weight, currentFatPerc, caloriesNeed);
-
-                                    break;
-                            }
-
-                            window.Remove(chooseGoalScreen);
-
-                            if (goal != null)
-                            {
-                                user.SetTransformationGoal(goal);
-                                finalAdvise = user.Goal.ToString();
-
-                                //Update user goal at db
-                                loggedInUser.TrainingProgramAdvise = finalAdvise;
-                                userService.UpdateUser(loggedInUser);
-
-                                window.Add(new TextView { Text = finalAdvise });
-                            }
-
-                            Application.Run(window);
-                        };
-                    };
-
-                    Application.Run(window);
-                }
-                // Login failed
-                else
-                {
-                    // Clear text fields
-                    loginScreen.UsernameField.Text = "";
-                    loginScreen.PasswordField.Text = "";
-
-                    // Set cursor back to username TextField
-                    loginScreen.SetFocus(loginScreen.UsernameField);
-
-                    // Error dialog 
-                    var d = new Dialog("Error",
-                                50,
-                                10,
-                                new Button("Ok", is_default: true)
-                                {
-                                    Clicked = () =>
-                                    {
-                                        Application.RequestStop();
-                                    }
-                                });
-
-                    var errorText = new Label(1, 2, "Wrong user or password!")
-                    {
-                        TextAlignment = TextAlignment.Centered,
-                        TextColor = (int)Color.BrightGreen
-                    };
-                    d.Add(errorText);
-
-                    errorText = new Label(1, 3, "Try to login again..");
-                    d.Add(errorText);
-
-                    Application.Run(d);
-                }
-            };
-
-            startScreen.RegisterOptionButton.Clicked += () =>
-            {
-                //top.Remove(startScreen);
-
-                // registerScreen = new RegisterView();
-                //RegisterAction(userService, window, registerScreen,loginScreen);
-
-                registerScreen.RegisterButton.Clicked += () =>
-                {
-                    var newUser = new UserEntitie
-                    {
-                        Username = registerScreen.UsernameField.Text.ToString(),
-                        Password = registerScreen.PasswordField.Text.ToString(),
-                        FirstName = registerScreen.FirstNameField.Text.ToString(),
-                        LastName = registerScreen.LastNameField.Text.ToString(),
-                        Email = registerScreen.EmailField.Text.ToString(),
-                        BioData = null
-                    };
-
-                    userService.Register(newUser);
-
-                    window.Remove(registerScreen);
-                    startScreen.Remove(startScreen.RegisterOptionButton);
-                    //startScreen.Remove(startScreen.LoginOptionButton);
-
-                    //window.Add(new Label(10, 5, "Successfully registered user with username:  " + registerScreen.UsernameField.Text.ToString()));
-
-                    Application.Run();
-                };
-
-
-                var regTop = new Toplevel(top.Frame);
-                var win = new Window("Register View")
-                {
-                    X = 0,
-                    Y = 1,
-                    Width = Dim.Fill(),
-                    Height = Dim.Fill()
-                };
-
-                regTop.Add(win);
-                var quitLoginViewButtton = new Button(50, 0, "Go back");
-                quitLoginViewButtton.Clicked += () => { regTop.Running = false; };
-
-                win.Add(registerScreen);
-
-                win.Add(quitLoginViewButtton);
-
-                Application.Run(regTop);
-
-            };
-
-            Application.Run();
         }
     }
 }
