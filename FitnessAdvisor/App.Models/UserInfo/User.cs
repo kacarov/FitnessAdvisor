@@ -52,7 +52,7 @@ namespace App.Models.UserInfo
             }
             private set
             {
-                goal = value ?? throw new ArgumentException("Goal cannot be null.");
+                goal = value ?? throw new ArgumentNullException("Goal cannot be null.");
             }
         }
 
