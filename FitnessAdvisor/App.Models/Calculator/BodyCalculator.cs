@@ -1,13 +1,13 @@
-﻿using App.Models.Enums;
-using App.Models.UserInfo;
+﻿using App.Models.Contracts;
+using App.Models.Enums;
 using System;
 
 namespace App.Models.Calculators
 {
-    public class BodyCalculator
+    public class BodyCalculator : IBodyCalculator
     {
         // Calculates user body fat
-        public double CalculateBodyFat(User user)
+        public double CalculateBodyFat(IUser user)
         {
             if (user == null)
             {
@@ -32,7 +32,7 @@ namespace App.Models.Calculators
             return bodyFatPercentage;
         }
         //Calculates user calories needs 
-        public static int CalculateCalories(User user)
+        public int CalculateCalories(IUser user)
         {
             if (user == null)
             {

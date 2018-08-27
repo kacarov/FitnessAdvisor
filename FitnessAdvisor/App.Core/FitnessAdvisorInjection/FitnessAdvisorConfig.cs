@@ -1,26 +1,30 @@
-﻿using Autofac;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using App.Core.Contracts;
+using App.Core.Services;
+using App.Data;
+using App.Data.Contracts;
+using App.Models.Calculators;
+using App.Models.Contracts;
+using Autofac;
 
 namespace App.Core.FitnessAdvisorInjection
 {
     public class FitnessAdvisorConfig
     {
-        IContainer Build()
+        public IContainer Build()
         {
-            var builder = new ContainerBuilder();
+            var containerBuilder = new ContainerBuilder();
 
-            RegisterCoreComponents(builder);
+            RegisterCoreComponents(containerBuilder);
 
-            var container = builder.Build();
-
-            return container;
+            return containerBuilder.Build();
         }
 
         public void RegisterCoreComponents(ContainerBuilder builder)
         {
-            //Register core components Bai Ivane
+            builder.RegisterType<Engine>().As<IEngine>().SingleInstance();
+            builder.RegisterType<DbContext>().As<IDbContext>().SingleInstance();
+            builder.RegisterType<BodyCalculator>().As<IBodyCalculator>().SingleInstance();
+            builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
         }
     }
 }

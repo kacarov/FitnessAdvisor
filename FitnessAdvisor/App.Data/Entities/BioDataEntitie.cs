@@ -1,8 +1,9 @@
-﻿using LiteDB;
+﻿using App.Data.Contracts;
+using LiteDB;
 
 namespace App.Data.Entities
 {
-    public class BioDataEntitie
+    public class BioDataEntitie : IBioDataEntitie
     {
         [BsonId]
         public int BioDataId { get; set; }

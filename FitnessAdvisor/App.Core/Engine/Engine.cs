@@ -1,9 +1,7 @@
 ﻿using App.Core.Contracts;
-using App.Core.Services;
 using App.Core.Views;
-using App.Data;
+using App.Data.Contracts;
 using App.Data.Entities;
-using App.Models.Calculators;
 using App.Models.Contracts;
 using App.Models.Enums;
 using App.Models.GeneralPurpose;
@@ -14,34 +12,21 @@ namespace App.Core
 {
     public class Engine : IEngine
     {
-        private static IEngine instance;
+        private readonly IDbContext db;
+        private readonly IUserService userService;
+        private readonly IBodyCalculator bodyCalculator;
 
-        private readonly DbContext db;
-        private readonly UserService userService;
-
-        private Engine()
+        public Engine(IDbContext db, IUserService userService, IBodyCalculator bodyCalculator)
         {
-            this.db = new DbContext();
-            this.userService = new UserService(this.db);
-        }
-
-        public static IEngine Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new Engine();
-                }
-
-                return instance;
-            }
+            this.db = db;
+            this.userService = userService;
+            this.bodyCalculator = bodyCalculator;
         }
 
         public void Run()
         {
 
-            UserEntitie loggedInUser = null;
+            IUserEntitie loggedInUser = null;
 
             //Views
             LoginView loginScreen = new LoginView();
@@ -144,8 +129,8 @@ namespace App.Core
                             //mapper UserEntitie to User
                             User user = new User(loggedInUser.Username, userBioData);
 
-                            var currentFatPerc = BodyCalculator.CalculateBodyFat(user);
-                            var caloriesNeed = BodyCalculator.CalculateCalories(user);
+                            var currentFatPerc = this.bodyCalculator.CalculateBodyFat(user);
+                            var caloriesNeed = this.bodyCalculator.CalculateCalories(user);
 
                             // Use factory?
                             IBodyTransformationGoal goal = null;

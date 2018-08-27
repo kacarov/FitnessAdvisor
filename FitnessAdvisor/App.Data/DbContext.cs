@@ -1,11 +1,9 @@
-﻿using App.Data.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using App.Data.Contracts;
+using App.Data.Repositories;
 
 namespace App.Data
 {
-    public class DbContext
+    public class DbContext : IDbContext
     {
         public DbContext()
         {

@@ -1,8 +1,9 @@
-﻿using LiteDB;
+﻿using App.Data.Contracts;
+using LiteDB;
 
 namespace App.Data.Entities
 {
-    public class UserEntitie
+    public class UserEntitie : IUserEntitie
     {
         [BsonId]
         public int UserId { get; set; }
@@ -18,7 +19,7 @@ namespace App.Data.Entities
         public string LastName { get; set; }
 
         //[BsonRef]
-        public BioDataEntitie BioData { get; set; }
+        public IBioDataEntitie BioData { get; set; }
 
         public string TrainingProgramAdvise { get; set; }
     }
