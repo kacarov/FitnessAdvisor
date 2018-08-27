@@ -1,6 +1,7 @@
 ﻿using App.Core.Contracts;
 using App.Core.FitnessAdvisorInjection;
 using Autofac;
+using System;
 
 namespace App.Core
 {
@@ -8,22 +9,20 @@ namespace App.Core
     {
         public static void Main(string[] args)
         {
-            var containerConfig = new FitnessAdvisorConfig();
-            var container = containerConfig.Build();
+            try
+            {
+                var containerConfig = new FitnessAdvisorConfig();
+                var container = containerConfig.Build();
 
-            var engine = container.Resolve<IEngine>();
-            engine.Run();
-
-            //try
-            //{
-            //    Engine.Instance.Run();
-            //}
-            //catch (Exception ex)
-            //{
-            //    FileLogger logger = new FileLogger();
-            //    logger.Log(ex.Message);
-            //    Console.WriteLine("");
-            //}
+                var engine = container.Resolve<IEngine>();
+                engine.Run();
+            }
+            catch (Exception ex)
+            {
+                FileLogger logger = new FileLogger();
+                logger.Log(ex.Message);
+                Console.WriteLine("You just broke it. Please restart the app:)");
+            }
         }
     }
 }

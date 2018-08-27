@@ -44,6 +44,11 @@ namespace FitnessAdvisor.Tests.App.Core.Services.Mocks
 
         public void Update(IUserEntitie entity)
         {
+            if (entity == null)
+            {
+                throw new ArgumentNullException("User cannot be null!");
+            }
+
             var user = this.FakeLiteDb.Find(u => u.Username == entity.Username);
 
             this.FakeLiteDb.Remove(user);

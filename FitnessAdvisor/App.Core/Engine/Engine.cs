@@ -4,7 +4,6 @@ using App.Data.Contracts;
 using App.Data.Entities;
 using App.Models.Contracts;
 using App.Models.Enums;
-using App.Models.GeneralPurpose;
 using App.Models.UserInfo;
 using Terminal.Gui;
 
@@ -12,20 +11,18 @@ namespace App.Core.Engine
 {
     public class Engine : IEngine
     {
-        private readonly IDbContext db;
         private readonly IUserService userService;
         private readonly IBodyCalculator bodyCalculator;
         private readonly IAppViewsContainer appViews;
         private readonly ITransformationGoalFactory transformationGoalFactory;
         private IUserEntitie loggedInUser = null;
 
-        public Engine(IDbContext db,
+        public Engine(
                 IUserService userService,
                 IBodyCalculator bodyCalculator,
                 IAppViewsContainer appViews,
                 ITransformationGoalFactory transformationGoalFactory)
         {
-            this.db = db;
             this.userService = userService;
             this.bodyCalculator = bodyCalculator;
             this.appViews = appViews;

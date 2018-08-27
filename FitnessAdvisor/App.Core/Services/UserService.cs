@@ -36,6 +36,11 @@ namespace App.Core.Services
 
         public void UpdateUser(IUserEntitie loggedInUser)
         {
+            if (loggedInUser == null)
+            {
+                throw new ArgumentNullException("User cannot be null!");
+            }
+
             db.UserRepository.Update(loggedInUser);
         }
     }

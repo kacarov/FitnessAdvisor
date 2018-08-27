@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using App.Models.Contracts;
+﻿using App.Models.Contracts;
 using App.Models.GeneralPurpose;
 
 namespace App.Core.Factory
@@ -14,7 +11,7 @@ namespace App.Core.Factory
             {
                 case 0:
                     return new Bulk(weight, currentFatPerc, caloriesNeed);
-                    
+
                 case 1:
                     return new Maintain(weight, currentFatPerc, caloriesNeed);
 

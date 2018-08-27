@@ -2,6 +2,7 @@
 using FitnessAdvisor.Tests.App.Core.Services.Mocks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System;
 using System.Linq;
 
 namespace FitnessAdvisor.Tests.App.Core.Services.UserServiceTests
@@ -24,6 +25,16 @@ namespace FitnessAdvisor.Tests.App.Core.Services.UserServiceTests
 
             // Assert
             Assert.AreEqual(userMock.Object, userRepositoryMock.FakeLiteDb.Single());
+        }
+
+        [TestMethod]
+        public void ThrowArgumentNullException_WhenNullUserEntitiePassed()
+        {
+            // Arrange
+            var userRepositoryMock = new UserRepositoryMock();
+
+            // Act && Assert
+            Assert.ThrowsException<ArgumentNullException>(() => userRepositoryMock.Update(null));
         }
     }
 }
